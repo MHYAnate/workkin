@@ -1,0 +1,1891 @@
+// ===========================================
+// WORKKIN - PRISMA SCHEMA
+// Comprehensive Database Schema for Workkin Platform
+// ===========================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+// ===========================================
+// ENUMS
+// ===========================================
+
+enum UserRole {
+  USER
+  PROVIDER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+  BANNED
+  PENDING_VERIFICATION
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  PREFER_NOT_TO_SAY
+}
+
+enum VerificationLevel {
+  UNVERIFIED
+  BASIC_VERIFIED
+  DOCUMENT_VERIFIED
+  FULLY_VERIFIED
+}
+
+enum SubscriptionTier {
+  FREE
+  BASE
+  MID
+  TOP
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+  PENDING
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum PaymentMethod {
+  ZAINPAY
+  PAYSTACK
+  FLUTTERWAVE
+  BANK_TRANSFER
+}
+
+enum TransactionType {
+  SUBSCRIPTION
+  FEATURED_LISTING
+  JOB_POSTING
+  SERVICE_BOOKING
+  PREMIUM_FEATURE
+  STAFF_UPGRADE
+  SQUAD_VERIFICATION
+  WALLET_TOPUP
+  WITHDRAWAL
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  IN_PROGRESS
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+enum ListingStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  SOLD
+  RENTED
+  LEASED
+  EXPIRED
+  DELETED
+}
+
+enum ListingType {
+  FOR_SALE
+  FOR_RENT
+  FOR_LEASE
+  FOR_SALE_AND_RENT
+  FOR_SALE_AND_LEASE
+}
+
+enum VehicleCondition {
+  NEW
+  FOREIGN_USED
+  LOCALLY_USED
+  SALVAGE
+}
+
+enum VehicleType {
+  CAR
+  MOTORCYCLE
+  TRUCK
+  BUS
+  VAN
+  HEAVY_EQUIPMENT
+}
+
+enum FuelType {
+  PETROL
+  DIESEL
+  ELECTRIC
+  HYBRID
+  CNG
+  LPG
+}
+
+enum TransmissionType {
+  AUTOMATIC
+  MANUAL
+  CVT
+  SEMI_AUTOMATIC
+}
+
+enum PropertyType {
+  RESIDENTIAL
+  COMMERCIAL
+  LAND
+  INDUSTRIAL
+}
+
+enum PropertySubtype {
+  APARTMENT
+  BUNGALOW
+  DUPLEX
+  TERRACE
+  DETACHED_HOUSE
+  SEMI_DETACHED
+  STUDIO
+  PENTHOUSE
+  OFFICE_SPACE
+  SHOP
+  WAREHOUSE
+  FACTORY
+  LAND_PLOT
+  FARM_LAND
+}
+
+enum FurnishingStatus {
+  FURNISHED
+  SEMI_FURNISHED
+  UNFURNISHED
+}
+
+enum ProductCondition {
+  NEW
+  LIKE_NEW
+  GOOD
+  FAIR
+  REFURBISHED
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  TEMPORARY
+  INTERNSHIP
+  FREELANCE
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+  PAUSED
+  FILLED
+  EXPIRED
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWED
+  SHORTLISTED
+  INTERVIEWED
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum RatingCategory {
+  SERVICE
+  VEHICLE
+  PROPERTY
+  PRODUCT
+  JOB
+  STAFF
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  FILE
+  AUDIO
+  VIDEO
+  SYSTEM
+}
+
+enum NotificationType {
+  BOOKING
+  MESSAGE
+  RATING
+  PAYMENT
+  SUBSCRIPTION
+  VERIFICATION
+  JOB_APPLICATION
+  SYSTEM
+  PROMOTION
+}
+
+enum ReportReason {
+  SPAM
+  INAPPROPRIATE
+  FRAUD
+  HARASSMENT
+  FAKE_LISTING
+  OTHER
+}
+
+enum ReportStatus {
+  PENDING
+  UNDER_REVIEW
+  RESOLVED
+  DISMISSED
+}
+
+enum ContactPreference {
+  CALL
+  WHATSAPP
+  PLATFORM_MESSAGE
+  ALL
+}
+
+enum StaffRole {
+  MANAGER
+  SUPERVISOR
+  EMPLOYEE
+  TRAINEE
+}
+
+enum StaffStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  TERMINATED
+}
+
+enum SquadStatus {
+  ACTIVE
+  INACTIVE
+  PENDING_VERIFICATION
+  VERIFIED
+}
+
+// ===========================================
+// USER MODELS
+// ===========================================
+
+model User {
+  id                    String              @id @default(cuid())
+  email                 String              @unique
+  phone                 String?             @unique
+  password              String
+  firstName             String
+  lastName              String
+  displayName           String?
+  avatar                String?
+  coverImage            String?
+  bio                   String?             @db.Text
+  gender                Gender?
+  dateOfBirth           DateTime?
+  
+  // Roles and Status
+  role                  UserRole            @default(USER)
+  status                UserStatus          @default(PENDING_VERIFICATION)
+  isProvider            Boolean             @default(false)
+  isClient              Boolean             @default(true)
+  
+  // Verification
+  emailVerified         Boolean             @default(false)
+  emailVerifiedAt       DateTime?
+  phoneVerified         Boolean             @default(false)
+  phoneVerifiedAt       DateTime?
+  verificationLevel     VerificationLevel   @default(UNVERIFIED)
+  
+  // Work Status
+  isOpenToWork          Boolean             @default(false)
+  isCurrentlyHiring     Boolean             @default(false)
+  
+  // Location
+  country               String?             @default("Nigeria")
+  countryCode           String?             @default("NG")
+  state                 String?
+  city                  String?
+  address               String?
+  latitude              Float?
+  longitude             Float?
+  
+  // Contact Preferences
+  contactPreference     ContactPreference   @default(ALL)
+  showFullAddress       Boolean             @default(false)
+  
+  // External Payment Info (visible to subscribed users only)
+  bankName              String?
+  bankAccountNumber     String?
+  bankAccountName       String?
+  externalPaymentLink   String?
+  
+  // Timestamps
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  lastLoginAt           DateTime?
+  deletedAt             DateTime?
+  
+  // Relations
+  profile               Profile?
+  subscription          Subscription?
+  wallet                Wallet?
+  
+  // Services
+  services              Service[]
+  serviceBookingsAsClient   Booking[]       @relation("ClientBookings")
+  serviceBookingsAsProvider Booking[]       @relation("ProviderBookings")
+  
+  // Market Listings
+  vehicleListings       VehicleListing[]
+  propertyListings      PropertyListing[]
+  productListings       ProductListing[]
+  
+  // Jobs
+  jobPostings           Job[]               @relation("JobPoster")
+  jobApplications       JobApplication[]
+  
+  // Staff & Squads
+  staffAsEmployer       Staff[]             @relation("Employer")
+  staffAsEmployee       Staff[]             @relation("Employee")
+  squadMemberships      SquadMember[]
+  ownedSquads           Squad[]             @relation("SquadOwner")
+  
+  // Messaging
+  sentMessages          Message[]           @relation("MessageSender")
+  chatRoomMemberships   ChatRoomMember[]
+  
+  // Ratings & Reviews
+  ratingsGiven          Rating[]            @relation("RatingGiver")
+  ratingsReceived       Rating[]            @relation("RatingReceiver")
+  reviewResponses       ReviewResponse[]
+  
+  // Favorites
+  favorites             Favorite[]
+  
+  // Notifications
+  notifications         Notification[]
+  
+  // Reports
+  reportsMade           Report[]            @relation("Reporter")
+  reportsReceived       Report[]            @relation("Reported")
+  
+  // Transactions
+  transactions          Transaction[]
+  
+  // Verification Documents
+  verificationDocuments VerificationDocument[]
+  
+  // Sessions & Tokens
+  sessions              Session[]
+  refreshTokens         RefreshToken[]
+  otps                  OTP[]
+  
+  // AI Insights
+  aiInsights            AIInsight[]
+  aiQueries             AIQuery[]
+  
+  // Talent Pool
+  talentPoolEntry       TalentPoolEntry?
+  
+  @@index([email])
+  @@index([phone])
+  @@index([status])
+  @@index([isProvider])
+  @@index([isOpenToWork])
+  @@index([isCurrentlyHiring])
+  @@index([state, city])
+  @@map("users")
+}
+
+model Profile {
+  id                    String              @id @default(cuid())
+  userId                String              @unique
+  
+  // Professional Info
+  businessName          String?
+  businessDescription   String?             @db.Text
+  businessLogo          String?
+  businessCoverImage    String?
+  yearsOfExperience     Int?
+  qualifications        String[]
+  certifications        String[]
+  
+  // Social Links
+  website               String?
+  facebook              String?
+  twitter               String?
+  instagram             String?
+  linkedin              String?
+  youtube               String?
+  tiktok                String?
+  
+  // Ratings Summary
+  averageRating         Float               @default(0)
+  totalRatings          Int                 @default(0)
+  providerRating        Float               @default(0)
+  clientRating          Float               @default(0)
+  
+  // Stats
+  totalServicesCompleted Int                @default(0)
+  totalVehiclesSold     Int                 @default(0)
+  totalPropertiesSold   Int                 @default(0)
+  totalProductsSold     Int                 @default(0)
+  responseRate          Float               @default(0)
+  responseTime          Int?                // in minutes
+  
+  // Service Areas
+  serviceAreas          String[]
+  serviceRadius         Int?                // in km
+  
+  // Timestamps
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  
+  // Relations
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@map("profiles")
+}
+
+model Session {
+  id            String    @id @default(cuid())
+  userId        String
+  token         String    @unique
+  userAgent     String?
+  ipAddress     String?
+  expiresAt     DateTime
+  createdAt     DateTime  @default(now())
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
+  @@map("sessions")
+}
+
+model RefreshToken {
+  id            String    @id @default(cuid())
+  userId        String
+  token         String    @unique
+  expiresAt     DateTime
+  createdAt     DateTime  @default(now())
+  revokedAt     DateTime?
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([token])
+  @@map("refresh_tokens")
+}
+
+model OTP {
+  id            String    @id @default(cuid())
+  userId        String
+  code          String
+  type          String    // email_verification, phone_verification, password_reset
+  expiresAt     DateTime
+  usedAt        DateTime?
+  createdAt     DateTime  @default(now())
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([code])
+  @@map("otps")
+}
+
+model VerificationDocument {
+  id            String              @id @default(cuid())
+  userId        String
+  type          String              // id_card, business_registration, cac, drivers_license, vehicle_registration, property_deed
+  documentUrl   String
+  status        String              @default("pending") // pending, approved, rejected
+  rejectionReason String?
+  verifiedBy    String?
+  verifiedAt    DateTime?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @updatedAt
+  
+  user          User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([type])
+  @@index([status])
+  @@map("verification_documents")
+}
+
+// ===========================================
+// SUBSCRIPTION & PAYMENT MODELS
+// ===========================================
+
+model Subscription {
+  id                String              @id @default(cuid())
+  userId            String              @unique
+  
+  tier              SubscriptionTier    @default(FREE)
+  status            SubscriptionStatus  @default(ACTIVE)
+  
+  // Limits based on tier
+  freeServiceListings   Int             @default(1)
+  freeVehicleSlots      Int             @default(1)
+  freePropertySlots     Int             @default(1)
+  freeProductSlots      Int             @default(1)
+  freeFeaturedPerMonth  Int             @default(0)
+  
+  // Current usage
+  usedServiceListings   Int             @default(0)
+  usedVehicleSlots      Int             @default(0)
+  usedPropertySlots     Int             @default(0)
+  usedProductSlots      Int             @default(0)
+  usedFeaturedThisMonth Int             @default(0)
+  
+  // Billing
+  price             Float               @default(0)
+  currency          String              @default("NGN")
+  billingCycle      String?             // monthly, yearly, lifetime
+  
+  startDate         DateTime            @default(now())
+  endDate           DateTime?
+  cancelledAt       DateTime?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions      Transaction[]
+  usageHistory      SubscriptionUsage[]
+  
+  @@map("subscriptions")
+}
+
+model Wallet {
+  id                String              @id @default(cuid())
+  userId            String              @unique
+  
+  balance           Float               @default(0)
+  currency          String              @default("NGN")
+  
+  // Zainpay Integration
+  zainboxCode       String?
+  virtualAccountNumber String?
+  virtualAccountBank   String?
+  virtualAccountName   String?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions      Transaction[]
+  
+  @@map("wallets")
+}
+
+model Transaction {
+  id                String              @id @default(cuid())
+  userId            String
+  walletId          String?
+  subscriptionId    String?
+  
+  type              TransactionType
+  amount            Float
+  currency          String              @default("NGN")
+  fee               Float               @default(0)
+  
+  status            PaymentStatus       @default(PENDING)
+  paymentMethod     PaymentMethod?
+  
+  // Payment Gateway References
+  txnRef            String              @unique
+  paymentRef        String?
+  gatewayResponse   Json?
+  
+  description       String?
+  metadata          Json?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  completedAt       DateTime?
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet            Wallet?             @relation(fields: [walletId], references: [id])
+  subscription      Subscription?       @relation(fields: [subscriptionId], references: [id])
+  
+  @@index([userId])
+  @@index([txnRef])
+  @@index([status])
+  @@index([type])
+  @@map("transactions")
+}
+
+// ===========================================
+// SERVICE MODELS
+// ===========================================
+
+model ServiceCategory {
+  id                String              @id @default(cuid())
+  name              String
+  slug              String              @unique
+  description       String?             @db.Text
+  icon              String?
+  image             String?
+  
+  parentId          String?
+  order             Int                 @default(0)
+  isActive          Boolean             @default(true)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  parent            ServiceCategory?    @relation("CategoryHierarchy", fields: [parentId], references: [id])
+  children          ServiceCategory[]   @relation("CategoryHierarchy")
+  serviceTypes      ServiceType[]
+  
+  @@map("service_categories")
+}
+
+model ServiceType {
+  id                String              @id @default(cuid())
+  categoryId        String
+  
+  serviceId         Int                 @unique  // The ID from the README (1-140)
+  name              String
+  slug              String              @unique
+  description       String?             @db.Text
+  icon              String?
+  
+  // Special Permissions
+  hasVehicleMarketAccess   Boolean      @default(false)
+  hasPropertyMarketAccess  Boolean      @default(false)
+  isFinancialService       Boolean      @default(false)
+  
+  isActive          Boolean             @default(true)
+  order             Int                 @default(0)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  category          ServiceCategory     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  services          Service[]
+  
+  @@index([categoryId])
+  @@map("service_types")
+}
+
+model Service {
+  id                String              @id @default(cuid())
+  userId            String
+  serviceTypeId     String
+  
+  title             String
+  slug              String
+  description       String              @db.Text
+  
+  // Pricing
+  price             Float?
+  priceType         String?             // fixed, hourly, daily, negotiable, starting_from
+  currency          String              @default("NGN")
+  
+  // Location
+  country           String              @default("Nigeria")
+  state             String?
+  city              String?
+  address           String?
+  latitude          Float?
+  longitude         Float?
+  serviceRadius     Int?                // in km
+  
+  // Media
+  images            String[]
+  videos            String[]
+  
+  // Availability
+  isAvailable       Boolean             @default(true)
+  availabilitySchedule Json?
+  
+  // Status
+  status            ListingStatus       @default(ACTIVE)
+  isFeatured        Boolean             @default(false)
+  featuredUntil     DateTime?
+  
+  // Stats
+  viewCount         Int                 @default(0)
+  inquiryCount      Int                 @default(0)
+  bookingCount      Int                 @default(0)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  publishedAt       DateTime?
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  serviceType       ServiceType         @relation(fields: [serviceTypeId], references: [id])
+  bookings          Booking[]
+  ratings           Rating[]
+  favorites         Favorite[]
+  
+  @@index([userId])
+  @@index([serviceTypeId])
+  @@index([status])
+  @@index([isFeatured])
+  @@index([state, city])
+  @@map("services")
+}
+
+model Booking {
+  id                String              @id @default(cuid())
+  serviceId         String
+  clientId          String
+  providerId        String
+  
+  // Booking Details
+  scheduledDate     DateTime
+  scheduledTime     String?
+  duration          Int?                // in minutes
+  
+  // Location
+  address           String?
+  latitude          Float?
+  longitude         Float?
+  
+  // Pricing
+  agreedPrice       Float?
+  currency          String              @default("NGN")
+  depositAmount     Float?
+  depositPaid       Boolean             @default(false)
+  
+  // Status
+  status            BookingStatus       @default(PENDING)
+  
+  // Notes
+  clientNotes       String?             @db.Text
+  providerNotes     String?             @db.Text
+  
+  // Completion
+  completedAt       DateTime?
+  cancelledAt       DateTime?
+  cancellationReason String?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  service           Service             @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  client            User                @relation("ClientBookings", fields: [clientId], references: [id])
+  provider          User                @relation("ProviderBookings", fields: [providerId], references: [id])
+  ratings           Rating[]
+  
+  @@index([serviceId])
+  @@index([clientId])
+  @@index([providerId])
+  @@index([status])
+  @@index([scheduledDate])
+  @@map("bookings")
+}
+
+// ===========================================
+// VEHICLE MARKET MODELS
+// ===========================================
+
+model VehicleListing {
+  id                String              @id @default(cuid())
+  userId            String
+  
+  // Basic Info
+  title             String
+  slug              String
+  description       String              @db.Text
+  
+  // Listing Type
+  listingType       ListingType
+  
+  // Vehicle Details
+  vehicleType       VehicleType
+  make              String
+  model             String
+  year              Int
+  trim              String?
+  vin               String?
+  
+  // Specifications
+  mileage           Int?
+  fuelType          FuelType?
+  transmission      TransmissionType?
+  engineSize        String?
+  color             String?
+  interiorColor     String?
+  seatingCapacity   Int?
+  numberOfDoors     Int?
+  
+  // Condition
+  condition         VehicleCondition
+  accidentHistory   String?             @db.Text
+  previousOwners    Int?
+  
+  // Features (JSON arrays for flexibility)
+  safetyFeatures    String[]
+  comfortFeatures   String[]
+  entertainmentFeatures String[]
+  performanceFeatures   String[]
+  
+  // Pricing
+  salePrice         Float?
+  leasePrice        Float?
+  rentPrice         Float?
+  currency          String              @default("NGN")
+  isNegotiable      Boolean             @default(true)
+  
+  // Location
+  country           String              @default("Nigeria")
+  state             String
+  city              String
+  address           String?
+  latitude          Float?
+  longitude         Float?
+  
+  // Media
+  images            String[]
+  videos            String[]
+  tourUrl           String?
+  
+  // Verification
+  verificationLevel VerificationLevel   @default(UNVERIFIED)
+  vinVerified       Boolean             @default(false)
+  documentsVerified Boolean             @default(false)
+  
+  // External Payment Info
+  preferredPaymentMethods String[]
+  bankName          String?
+  bankAccountNumber String?
+  bankAccountName   String?
+  externalPaymentLink String?
+  financingAvailable Boolean            @default(false)
+  
+  // Publication Settings
+  status            ListingStatus       @default(DRAFT)
+  contactPreference ContactPreference   @default(ALL)
+  showFullAddress   Boolean             @default(false)
+  allowTestDrive    Boolean             @default(true)
+  
+  isFeatured        Boolean             @default(false)
+  featuredUntil     DateTime?
+  
+  // Stats
+  viewCount         Int                 @default(0)
+  inquiryCount      Int                 @default(0)
+  saveCount         Int                 @default(0)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  publishedAt       DateTime?
+  soldAt            DateTime?
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  documents         VehicleDocument[]
+  testDriveSchedules TestDriveSchedule[]
+  transactions      VehicleTransaction[]
+  ratings           Rating[]
+  favorites         Favorite[]
+  
+  @@index([userId])
+  @@index([vehicleType])
+  @@index([make, model])
+  @@index([status])
+  @@index([isFeatured])
+  @@index([state, city])
+  @@index([listingType])
+  @@map("vehicle_listings")
+}
+
+model VehicleDocument {
+  id                String              @id @default(cuid())
+  vehicleListingId  String
+  
+  type              String              // vin_photo, registration, insurance, inspection, ownership, mileage
+  documentUrl       String
+  status            String              @default("pending") // pending, verified, rejected
+  verifiedAt        DateTime?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  vehicleListing    VehicleListing      @relation(fields: [vehicleListingId], references: [id], onDelete: Cascade)
+  
+  @@index([vehicleListingId])
+  @@map("vehicle_documents")
+}
+
+model TestDriveSchedule {
+  id                String              @id @default(cuid())
+  vehicleListingId  String
+  buyerId           String
+  
+  scheduledDate     DateTime
+  scheduledTime     String
+  status            String              @default("pending") // pending, confirmed, completed, cancelled
+  notes             String?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  vehicleListing    VehicleListing      @relation(fields: [vehicleListingId], references: [id], onDelete: Cascade)
+  
+  @@index([vehicleListingId])
+  @@index([buyerId])
+  @@map("test_drive_schedules")
+}
+
+model VehicleTransaction {
+  id                String              @id @default(cuid())
+  vehicleListingId  String
+  buyerId           String
+  sellerId          String
+  
+  transactionType   String              // sale, lease, rent
+  agreedPrice       Float
+  currency          String              @default("NGN")
+  
+  status            String              @default("pending") // pending, completed, cancelled
+  completedAt       DateTime?
+  
+  buyerNotes        String?
+  sellerNotes       String?
+  
+  // Rating tracking
+  buyerRated        Boolean             @default(false)
+  sellerRated       Boolean             @default(false)
+  ratingDeadline    DateTime?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  vehicleListing    VehicleListing      @relation(fields: [vehicleListingId], references: [id], onDelete: Cascade)
+  
+  @@index([vehicleListingId])
+  @@index([buyerId])
+  @@index([sellerId])
+  @@map("vehicle_transactions")
+}
+
+// ===========================================
+// REAL ESTATE MARKET MODELS
+// ===========================================
+
+model PropertyListing {
+  id                String              @id @default(cuid())
+  userId            String
+  
+  // Basic Info
+  title             String
+  slug              String
+  description       String              @db.Text
+  
+  // Listing Type
+  listingType       ListingType
+  
+  // Property Details
+  propertyType      PropertyType
+  propertySubtype   PropertySubtype?
+  
+  // Specifications
+  bedrooms          Int?
+  bathrooms         Int?
+  toilets           Int?
+  size              Float?              // in sqm
+  landSize          Float?              // for land plots
+  yearBuilt         Int?
+  floors            Int?
+  
+  furnishing        FurnishingStatus?
+  
+  // Features (JSON arrays)
+  interiorFeatures  String[]
+  exteriorFeatures  String[]
+  utilities         String[]
+  securityFeatures  String[]
+  communityFeatures String[]
+  
+  // Pricing
+  salePrice         Float?
+  rentPrice         Float?
+  leasePrice        Float?
+  serviceCharge     Float?
+  currency          String              @default("NGN")
+  isNegotiable      Boolean             @default(true)
+  
+  // Location
+  country           String              @default("Nigeria")
+  state             String
+  city              String
+  area              String?
+  address           String?
+  latitude          Float?
+  longitude         Float?
+  
+  // Media
+  images            String[]
+  videos            String[]
+  virtualTourUrl    String?
+  floorPlanUrl      String?
+  surveyPlanUrl     String?
+  
+  // Verification & Documentation
+  verificationLevel VerificationLevel   @default(UNVERIFIED)
+  ownershipType     String?             // owner, agent, manager
+  ownerAuthorization Boolean            @default(false)
+  
+  // External Payment Info
+  preferredPaymentMethods String[]
+  bankName          String?
+  bankAccountNumber String?
+  bankAccountName   String?
+  externalPaymentLink String?
+  mortgageAvailable Boolean             @default(false)
+  
+  // Publication Settings
+  status            ListingStatus       @default(DRAFT)
+  availabilityDate  DateTime?
+  contactPreference ContactPreference   @default(ALL)
+  showFullAddress   Boolean             @default(false)
+  allowViewingSchedule Boolean          @default(true)
+  
+  isFeatured        Boolean             @default(false)
+  featuredUntil     DateTime?
+  
+  // Stats
+  viewCount         Int                 @default(0)
+  inquiryCount      Int                 @default(0)
+  saveCount         Int                 @default(0)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  publishedAt       DateTime?
+  soldAt            DateTime?
+  rentedAt          DateTime?
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  documents         PropertyDocument[]
+  viewingSchedules  ViewingSchedule[]
+  transactions      PropertyTransaction[]
+  ratings           Rating[]
+  favorites         Favorite[]
+  
+  @@index([userId])
+  @@index([propertyType])
+  @@index([status])
+  @@index([isFeatured])
+  @@index([state, city])
+  @@index([listingType])
+  @@map("property_listings")
+}
+
+model PropertyDocument {
+  id                String              @id @default(cuid())
+  propertyListingId String
+  
+  type              String              // deed, c_of_o, survey_plan, building_approval, owner_authorization
+  documentUrl       String
+  status            String              @default("pending")
+  verifiedAt        DateTime?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  propertyListing   PropertyListing     @relation(fields: [propertyListingId], references: [id], onDelete: Cascade)
+  
+  @@index([propertyListingId])
+  @@map("property_documents")
+}
+
+model ViewingSchedule {
+  id                String              @id @default(cuid())
+  propertyListingId String
+  viewerId          String
+  
+  scheduledDate     DateTime
+  scheduledTime     String
+  status            String              @default("pending")
+  notes             String?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  propertyListing   PropertyListing     @relation(fields: [propertyListingId], references: [id], onDelete: Cascade)
+  
+  @@index([propertyListingId])
+  @@index([viewerId])
+  @@map("viewing_schedules")
+}
+
+model PropertyTransaction {
+  id                String              @id @default(cuid())
+  propertyListingId String
+  buyerRenterId     String
+  sellerLandlordId  String
+  
+  transactionType   String              // sale, rent, lease
+  agreedPrice       Float
+  currency          String              @default("NGN")
+  
+  status            String              @default("pending")
+  completedAt       DateTime?
+  
+  // Rating tracking
+  buyerRenterRated  Boolean             @default(false)
+  sellerLandlordRated Boolean           @default(false)
+  ratingDeadline    DateTime?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  propertyListing   PropertyListing     @relation(fields: [propertyListingId], references: [id], onDelete: Cascade)
+  
+  @@index([propertyListingId])
+  @@map("property_transactions")
+}
+
+// ===========================================
+// GENERAL MARKET MODELS
+// ===========================================
+
+model ProductListing {
+  id                String              @id @default(cuid())
+  userId            String
+  
+  // Basic Info
+  title             String
+  slug              String
+  description       String              @db.Text
+  
+  // Listing Type
+  listingType       ListingType
+  
+  // Product Details
+  category          String
+  subcategory       String?
+  brand             String?
+  condition         ProductCondition
+  
+  // Specifications
+  specifications    Json?
+  features          String[]
+  
+  // Pricing
+  salePrice         Float?
+  leasePrice        Float?
+  rentPrice         Float?
+  currency          String              @default("NGN")
+  isNegotiable      Boolean             @default(true)
+  
+  // Location
+  country           String              @default("Nigeria")
+  state             String
+  city              String
+  address           String?
+  latitude          Float?
+  longitude         Float?
+  
+  // Delivery
+  deliveryAvailable Boolean             @default(false)
+  deliveryFee       Float?
+  pickupOnly        Boolean             @default(false)
+  
+  // Media
+  images            String[]
+  videos            String[]
+  
+  // External Payment Info
+  preferredPaymentMethods String[]
+  bankName          String?
+  bankAccountNumber String?
+  bankAccountName   String?
+  externalPaymentLink String?
+  
+  // Publication Settings
+  status            ListingStatus       @default(DRAFT)
+  contactPreference ContactPreference   @default(ALL)
+  
+  isFeatured        Boolean             @default(false)
+  featuredUntil     DateTime?
+  
+  // Stats
+  viewCount         Int                 @default(0)
+  inquiryCount      Int                 @default(0)
+  saveCount         Int                 @default(0)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  publishedAt       DateTime?
+  soldAt            DateTime?
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions      ProductTransaction[]
+  ratings           Rating[]
+  favorites         Favorite[]
+  
+  @@index([userId])
+  @@index([category])
+  @@index([status])
+  @@index([isFeatured])
+  @@index([state, city])
+  @@map("product_listings")
+}
+
+model ProductTransaction {
+  id                String              @id @default(cuid())
+  productListingId  String
+  buyerId           String
+  sellerId          String
+  
+  transactionType   String              // sale, lease, rent
+  agreedPrice       Float
+  currency          String              @default("NGN")
+  
+  status            String              @default("pending")
+  completedAt       DateTime?
+  
+  // Rating tracking
+  buyerRated        Boolean             @default(false)
+  sellerRated       Boolean             @default(false)
+  ratingDeadline    DateTime?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  productListing    ProductListing      @relation(fields: [productListingId], references: [id], onDelete: Cascade)
+  
+  @@index([productListingId])
+  @@map("product_transactions")
+}
+
+// ===========================================
+// JOB MODELS
+// ===========================================
+
+model Job {
+  id                String              @id @default(cuid())
+  posterId          String
+  
+  // Basic Info
+  title             String
+  slug              String
+  description       String              @db.Text
+  requirements      String[]
+  responsibilities  String[]
+  
+  // Job Details
+  jobType           JobType
+  experienceLevel   String?             // entry, mid, senior, executive
+  educationLevel    String?
+  skills            String[]
+  
+  // Compensation
+  salaryMin         Float?
+  salaryMax         Float?
+  currency          String              @default("NGN")
+  salaryType        String?             // monthly, yearly, hourly, project
+  benefits          String[]
+  
+  // Location
+  country           String              @default("Nigeria")
+  state             String?
+  city              String?
+  isRemote          Boolean             @default(false)
+  
+  // Application
+  applicationDeadline DateTime?
+  maxApplications   Int?
+  applicationCount  Int                 @default(0)
+  
+  // Status
+  status            JobStatus           @default(OPEN)
+  isFeatured        Boolean             @default(false)
+  featuredUntil     DateTime?
+  
+  // Stats
+  viewCount         Int                 @default(0)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  publishedAt       DateTime?
+  closedAt          DateTime?
+  
+  poster            User                @relation("JobPoster", fields: [posterId], references: [id], onDelete: Cascade)
+  applications      JobApplication[]
+  
+  @@index([posterId])
+  @@index([jobType])
+  @@index([status])
+  @@index([isFeatured])
+  @@index([state, city])
+  @@map("jobs")
+}
+
+model JobApplication {
+  id                String              @id @default(cuid())
+  jobId             String
+  applicantId       String
+  
+  coverLetter       String?             @db.Text
+  resumeUrl         String?
+  portfolioUrl      String?
+  
+  expectedSalary    Float?
+  availableFrom     DateTime?
+  
+  status            ApplicationStatus   @default(PENDING)
+  
+  // Employer notes (private)
+  employerNotes     String?             @db.Text
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  job               Job                 @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  applicant         User                @relation(fields: [applicantId], references: [id], onDelete: Cascade)
+  
+  @@unique([jobId, applicantId])
+  @@index([jobId])
+  @@index([applicantId])
+  @@index([status])
+  @@map("job_applications")
+}
+
+// ===========================================
+// STAFF & SQUAD MODELS
+// ===========================================
+
+model Staff {
+  id                String              @id @default(cuid())
+  employerId        String
+  employeeId        String
+  
+  role              StaffRole           @default(EMPLOYEE)
+  title             String?
+  department        String?
+  
+  status            StaffStatus         @default(PENDING)
+  
+  startDate         DateTime?
+  endDate           DateTime?
+  
+  // Permissions
+  permissions       String[]
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  employer          User                @relation("Employer", fields: [employerId], references: [id], onDelete: Cascade)
+  employee          User                @relation("Employee", fields: [employeeId], references: [id], onDelete: Cascade)
+  
+  @@unique([employerId, employeeId])
+  @@index([employerId])
+  @@index([employeeId])
+  @@index([status])
+  @@map("staff")
+}
+
+model Squad {
+  id                String              @id @default(cuid())
+  ownerId           String
+  
+  name              String
+  slug              String              @unique
+  description       String?             @db.Text
+  logo              String?
+  coverImage        String?
+  
+  // Verification
+  status            SquadStatus         @default(PENDING_VERIFICATION)
+  verifiedAt        DateTime?
+  
+  // Stats
+  memberCount       Int                 @default(1)
+  averageRating     Float               @default(0)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  owner             User                @relation("SquadOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  members           SquadMember[]
+  
+  @@index([ownerId])
+  @@index([status])
+  @@map("squads")
+}
+
+model SquadMember {
+  id                String              @id @default(cuid())
+  squadId           String
+  userId            String
+  
+  role              String              @default("member") // owner, admin, member
+  joinedAt          DateTime            @default(now())
+  
+  squad             Squad               @relation(fields: [squadId], references: [id], onDelete: Cascade)
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([squadId, userId])
+  @@index([squadId])
+  @@index([userId])
+  @@map("squad_members")
+}
+
+// ===========================================
+// MESSAGING MODELS
+// ===========================================
+
+model ChatRoom {
+  id                String              @id @default(cuid())
+  
+  name              String?
+  description       String?
+  image             String?
+  
+  type              String              @default("direct") // direct, group, community
+  isPublic          Boolean             @default(false)
+  
+  // For community rooms
+  topic             String?
+  maxMembers        Int?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  members           ChatRoomMember[]
+  messages          Message[]
+  
+  @@map("chat_rooms")
+}
+
+model ChatRoomMember {
+  id                String              @id @default(cuid())
+  chatRoomId        String
+  userId            String
+  
+  role              String              @default("member") // admin, moderator, member
+  joinedAt          DateTime            @default(now())
+  mutedUntil        DateTime?
+  
+  // Read tracking
+  lastReadAt        DateTime?
+  
+  chatRoom          ChatRoom            @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([chatRoomId, userId])
+  @@index([chatRoomId])
+  @@index([userId])
+  @@map("chat_room_members")
+}
+
+model Message {
+  id                String              @id @default(cuid())
+  chatRoomId        String
+  senderId          String
+  
+  type              MessageType         @default(TEXT)
+  content           String?             @db.Text
+  mediaUrl          String?
+  
+  // Reply
+  replyToId         String?
+  
+  isEdited          Boolean             @default(false)
+  isDeleted         Boolean             @default(false)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  chatRoom          ChatRoom            @relation(fields: [chatRoomId], references: [id], onDelete: Cascade)
+  sender            User                @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  replyTo           Message?            @relation("MessageReplies", fields: [replyToId], references: [id])
+  replies           Message[]           @relation("MessageReplies")
+  
+  @@index([chatRoomId])
+  @@index([senderId])
+  @@index([createdAt])
+  @@map("messages")
+}
+
+// ===========================================
+// RATING & REVIEW MODELS
+// ===========================================
+
+model Rating {
+  id                String              @id @default(cuid())
+  giverId           String
+  receiverId        String
+  
+  category          RatingCategory
+  
+  // Related Entity
+  serviceId         String?
+  bookingId         String?
+  vehicleListingId  String?
+  propertyListingId String?
+  productListingId  String?
+  
+  // Ratings (1-5)
+  overallRating     Int
+  
+  // Category-specific ratings
+  qualityRating     Int?
+  punctualityRating Int?
+  communicationRating Int?
+  valueRating       Int?
+  accuracyRating    Int?
+  conditionRating   Int?
+  transactionRating Int?
+  
+  // Review
+  review            String?             @db.VarChar(500)
+  
+  // Moderation
+  isVisible         Boolean             @default(true)
+  isReported        Boolean             @default(false)
+  moderatedAt       DateTime?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  giver             User                @relation("RatingGiver", fields: [giverId], references: [id], onDelete: Cascade)
+  receiver          User                @relation("RatingReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+  service           Service?            @relation(fields: [serviceId], references: [id])
+  booking           Booking?            @relation(fields: [bookingId], references: [id])
+  vehicleListing    VehicleListing?     @relation(fields: [vehicleListingId], references: [id])
+  propertyListing   PropertyListing?    @relation(fields: [propertyListingId], references: [id])
+  productListing    ProductListing?     @relation(fields: [productListingId], references: [id])
+  response          ReviewResponse?
+  
+  @@index([giverId])
+  @@index([receiverId])
+  @@index([category])
+  @@index([createdAt])
+  @@map("ratings")
+}
+
+model ReviewResponse {
+  id                String              @id @default(cuid())
+  ratingId          String              @unique
+  responderId       String
+  
+  response          String              @db.VarChar(500)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  rating            Rating              @relation(fields: [ratingId], references: [id], onDelete: Cascade)
+  responder         User                @relation(fields: [responderId], references: [id], onDelete: Cascade)
+  
+  @@map("review_responses")
+}
+
+// ===========================================
+// FAVORITES MODEL
+// ===========================================
+
+model Favorite {
+  id                String              @id @default(cuid())
+  userId            String
+  
+  // Only one of these will be set
+  serviceId         String?
+  vehicleListingId  String?
+  propertyListingId String?
+  productListingId  String?
+  
+  createdAt         DateTime            @default(now())
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  service           Service?            @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  vehicleListing    VehicleListing?     @relation(fields: [vehicleListingId], references: [id], onDelete: Cascade)
+  propertyListing   PropertyListing?    @relation(fields: [propertyListingId], references: [id], onDelete: Cascade)
+  productListing    ProductListing?     @relation(fields: [productListingId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, serviceId])
+  @@unique([userId, vehicleListingId])
+  @@unique([userId, propertyListingId])
+  @@unique([userId, productListingId])
+  @@index([userId])
+  @@map("favorites")
+}
+
+// ===========================================
+// NOTIFICATION MODEL
+// ===========================================
+
+model Notification {
+  id                String              @id @default(cuid())
+  userId            String
+  
+  type              NotificationType
+  title             String
+  message           String
+  
+  // Action
+  actionUrl         String?
+  metadata          Json?
+  
+  isRead            Boolean             @default(false)
+  readAt            DateTime?
+  
+  createdAt         DateTime            @default(now())
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+  @@map("notifications")
+}
+
+// ===========================================
+// REPORT MODEL
+// ===========================================
+
+model Report {
+  id                String              @id @default(cuid())
+  reporterId        String
+  reportedUserId    String?
+  
+  // What is being reported
+  entityType        String              // user, service, vehicle, property, product, message, review
+  entityId          String
+  
+  reason            ReportReason
+  description       String?             @db.Text
+  evidence          String[]            // URLs to screenshots, etc.
+  
+  status            ReportStatus        @default(PENDING)
+  resolution        String?
+  resolvedBy        String?
+  resolvedAt        DateTime?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  reporter          User                @relation("Reporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reportedUser      User?               @relation("Reported", fields: [reportedUserId], references: [id])
+  
+  @@index([reporterId])
+  @@index([reportedUserId])
+  @@index([status])
+  @@map("reports")
+}
+
+// ===========================================
+// AI INSIGHTS MODEL
+// ===========================================
+
+model AIInsight {
+  id                String              @id @default(cuid())
+  userId            String
+  
+  type              String              // market_insight, pricing_recommendation, demand_forecast, competitor_analysis
+  category          String?             // service, vehicle, property, product
+  
+  title             String
+  content           String              @db.Text
+  
+  data              Json?               // Structured insight data
+  confidence        Float?              // 0-1 confidence score
+  
+  isRead            Boolean             @default(false)
+  readAt            DateTime?
+  
+  expiresAt         DateTime?
+  
+  createdAt         DateTime            @default(now())
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+  @@map("ai_insights")
+}
+
+// ===========================================
+// FINANCIAL SERVICE MODELS
+// ===========================================
+
+model InsurancePackage {
+  id                String              @id @default(cuid())
+  providerId        String
+  
+  name              String
+  description       String              @db.Text
+  type              String              // vehicle, property, general
+  
+  coverageDetails   Json
+  premiumRange      Json                // { min: Float, max: Float }
+  
+  terms             String?             @db.Text
+  externalQuoteLink String?
+  
+  isActive          Boolean             @default(true)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([providerId])
+  @@index([type])
+  @@map("insurance_packages")
+}
+
+model FinancingPackage {
+  id                String              @id @default(cuid())
+  providerId        String
+  
+  name              String
+  description       String              @db.Text
+  type              String              // vehicle, property (mortgage), general
+  
+  interestRateMin   Float?
+  interestRateMax   Float?
+  tenureMinMonths   Int?
+  tenureMaxMonths   Int?
+  
+  eligibilityRequirements String[]
+  requiredDocuments String[]
+  
+  externalCalculatorLink String?
+  externalApplyLink String?
+  
+  isActive          Boolean             @default(true)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@index([providerId])
+  @@index([type])
+  @@map("financing_packages")
+}
+
+// ===========================================
+// SYSTEM MODELS
+// ===========================================
+
+model SystemSetting {
+  id                String              @id @default(cuid())
+  key               String              @unique
+  value             Json
+  description       String?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  @@map("system_settings")
+}
+
+model AuditLog {
+  id                String              @id @default(cuid())
+  userId            String?
+  
+  action            String
+  entityType        String
+  entityId          String?
+  
+  oldData           Json?
+  newData           Json?
+  
+  ipAddress         String?
+  userAgent         String?
+  
+  createdAt         DateTime            @default(now())
+  
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// ===========================================
+// AI RAG SYSTEM MODELS
+// ===========================================
+
+model AIQuery {
+  id          String   @id @default(cuid())
+  userId      String
+  query       String   @db.Text
+  response    Json?
+  intent      String?
+  module      String?  // vehicle, property, service, general
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([module])
+  @@map("ai_queries")
+}
+
+// ===========================================
+// TALENT POOL MODEL
+// ===========================================
+
+model TalentPoolEntry {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  
+  headline      String?
+  skills        String[]
+  experience    Json?
+  expectedSalary Float?
+  availability  String?  // immediate, 2_weeks, 1_month
+  
+  isActive      Boolean  @default(true)
+  lastUpdated   DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([isActive])
+  @@index([skills])
+  @@map("talent_pool_entries")
+}
+
+// ===========================================
+// SUBSCRIPTION USAGE TRACKING
+// ===========================================
+
+model SubscriptionUsage {
+  id                    String       @id @default(cuid())
+  subscriptionId        String
+  period                String       // e.g., "2024-01"
+  
+  serviceListingsUsed   Int          @default(0)
+  vehicleListingsUsed   Int          @default(0)
+  propertyListingsUsed  Int          @default(0)
+  productListingsUsed   Int          @default(0)
+  featuredListingsUsed  Int          @default(0)
+  
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  
+  subscription          Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  
+  @@unique([subscriptionId, period])
+  @@index([subscriptionId])
+  @@map("subscription_usages")
+}

@@ -1,0 +1,53 @@
+# General
+.DS_Store
+Thumbs.db
+*.log
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+pnpm-debug.log*
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.env
+!.env.example
+
+# NestJS (Backend)
+dist/
+coverage/
+# If you have specific backend logs
+backend/*.log
+
+# Next.js (Frontend)
+.next/
+out/
+build/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+# Prisma
+*.db
+*.db-journal
+
+# Parcel-cache (if used)
+.parcel-cache
+
+# Nuxt (if used, good to have)
+.nuxt/
+.output/
+
+# Docker
+docker-compose.override.yml
