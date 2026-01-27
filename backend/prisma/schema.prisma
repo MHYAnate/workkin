@@ -1,6 +1,6 @@
 // ===========================================
-// WORKKIN - PRISMA SCHEMA
-// Comprehensive Database Schema for Workkin Platform
+// WORKKIN - ENHANCED PRISMA SCHEMA
+// Fully aligned with workflow document specifications
 // ===========================================
 
 generator client {
@@ -14,7 +14,7 @@ datasource db {
 }
 
 // ===========================================
-// ENUMS
+// ENUMS - ENHANCED
 // ===========================================
 
 enum UserRole {
@@ -41,9 +41,9 @@ enum Gender {
 
 enum VerificationLevel {
   UNVERIFIED
-  BASIC_VERIFIED
-  DOCUMENT_VERIFIED
-  FULLY_VERIFIED
+  BASIC_VERIFIED        // Photo verification only
+  DOCUMENT_VERIFIED     // Valid documents uploaded (as pictures)
+  FULLY_VERIFIED        // Physical verification by Workkin partner
 }
 
 enum SubscriptionTier {
@@ -73,6 +73,7 @@ enum PaymentMethod {
   PAYSTACK
   FLUTTERWAVE
   BANK_TRANSFER
+  EXTERNAL           // For marketplace transactions outside Workkin
 }
 
 enum TransactionType {
@@ -85,6 +86,7 @@ enum TransactionType {
   SQUAD_VERIFICATION
   WALLET_TOPUP
   WITHDRAWAL
+  EXTERNAL_TRANSACTION  // For marketplace transactions
 }
 
 enum BookingStatus {
@@ -129,6 +131,26 @@ enum VehicleType {
   BUS
   VAN
   HEAVY_EQUIPMENT
+}
+
+enum VehicleSubtype {
+  NEW_CARS
+  USED_CARS
+  CERTIFIED_PRE_OWNED
+  LUXURY_EXOTIC_CARS
+  NEW_MOTORCYCLES
+  USED_MOTORCYCLES
+  SPORTS_BIKES
+  COMMERCIAL_MOTORCYCLES
+  PICKUP_TRUCKS
+  DELIVERY_TRUCKS
+  BUSES_MINIBUSES
+  TRAILERS
+  COMMERCIAL_VANS
+  CONSTRUCTION_EQUIPMENT
+  AGRICULTURAL_EQUIPMENT
+  INDUSTRIAL_MACHINERY
+  FORKLIFTS_LOADERS
 }
 
 enum FuelType {
@@ -240,6 +262,8 @@ enum NotificationType {
   JOB_APPLICATION
   SYSTEM
   PROMOTION
+  AI_INSIGHT
+  RATING_REMINDER
 }
 
 enum ReportReason {
@@ -286,14 +310,81 @@ enum SquadStatus {
   VERIFIED
 }
 
+enum DocumentType {
+  ID_CARD
+  BUSINESS_REGISTRATION
+  CAC
+  DRIVERS_LICENSE
+  VEHICLE_REGISTRATION
+  PROPERTY_DEED
+  VIN_PHOTO
+  REGISTRATION_DOC
+  INSURANCE_DOC
+  INSPECTION_CERTIFICATE
+  OWNERSHIP_DOC
+  MILEAGE_VERIFICATION
+  SURVEY_PLAN
+  BUILDING_APPROVAL
+  OWNER_AUTHORIZATION
+}
+
+enum DocumentRequirement {
+  PHOTO_OF_ORIGINAL    // Must be photo of physical document
+  SCAN                 // Scanned copy accepted
+  PDF                  // PDF document accepted
+}
+
+enum DocumentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  EXPIRED
+}
+
+enum ServicePermission {
+  VEHICLE_MARKET_ACCESS     // IDs: 133, 134
+  REAL_ESTATE_MARKET_ACCESS // IDs: 82, 131, 132
+  FINANCIAL_SERVICES        // IDs: 135-140
+  GENERAL_MARKET_ACCESS     // All users can access
+  SERVICE_PROVIDER          // Standard service provider
+}
+
+enum TransactionVisibility {
+  HIDDEN           // Visible to no one
+  SUBSCRIBED_ONLY  // Visible to subscribed users only
+  ALL_USERS        // Visible to all registered users
+  PUBLIC           // Visible to everyone (including unregistered)
+}
+
+enum AIInsightType {
+  MARKET_INSIGHT
+  PRICING_RECOMMENDATION
+  DEMAND_FORECAST
+  COMPETITOR_ANALYSIS
+  SERVICE_RECOMMENDATION
+  TRANSACTION_RISK
+  BUSINESS_INTELLIGENCE
+}
+
+enum ZainpayEventType {
+  DEPOSIT_SUCCESS
+  DEPOSIT_FAILED
+  TRANSFER_SUCCESS
+  TRANSFER_FAILED
+  CARD_PAYMENT_SUCCESS
+  CARD_PAYMENT_FAILED
+  VIRTUAL_ACCOUNT_CREATED
+  SETTLEMENT_PROCESSED
+}
+
 // ===========================================
-// USER MODELS
+// USER MODELS - ENHANCED
 // ===========================================
 
 model User {
   id                    String              @id @default(cuid())
-  email                 String              @unique
-  phone                 String?             @unique
+  email                 String?             @unique
+  phone                 String              @unique
   password              String
   firstName             String
   lastName              String
@@ -310,22 +401,33 @@ model User {
   isProvider            Boolean             @default(false)
   isClient              Boolean             @default(true)
   
+  // Work Status (for Talent Pool)
+  isOpenToWork          Boolean             @default(false)
+  isCurrentlyHiring     Boolean             @default(false)
+  workStatusUpdatedAt   DateTime?
+  
+  // Profile Sharing
+  profileSharingEnabled Boolean             @default(true)
+  profileShareToken     String?             @unique
+  profileShareExpiresAt DateTime?
+  lastProfileShareAt    DateTime?
+  profileViewCount      Int                 @default(0)
+  
   // Verification
   emailVerified         Boolean             @default(false)
   emailVerifiedAt       DateTime?
   phoneVerified         Boolean             @default(false)
   phoneVerifiedAt       DateTime?
   verificationLevel     VerificationLevel   @default(UNVERIFIED)
-  
-  // Work Status
-  isOpenToWork          Boolean             @default(false)
-  isCurrentlyHiring     Boolean             @default(false)
+  verificationRequested Boolean             @default(false)
+  verificationRequestedAt DateTime?
   
   // Location
-  country               String?             @default("Nigeria")
-  countryCode           String?             @default("NG")
+  country               String              @default("Nigeria")
+  countryCode           String              @default("NG")
   state                 String?
   city                  String?
+  area                  String?
   address               String?
   latitude              Float?
   longitude             Float?
@@ -334,19 +436,26 @@ model User {
   contactPreference     ContactPreference   @default(ALL)
   showFullAddress       Boolean             @default(false)
   
-  // External Payment Info (visible to subscribed users only)
+  // External Payment Info (visibility controlled by subscription)
   bankName              String?
   bankAccountNumber     String?
   bankAccountName       String?
+  bankCode              String?
   externalPaymentLink   String?
+  preferredPaymentMethods String[]
   
   // Timestamps
   createdAt             DateTime            @default(now())
   updatedAt             DateTime            @updatedAt
   lastLoginAt           DateTime?
+  lastActiveAt          DateTime?
   deletedAt             DateTime?
   
+  // Service Type Assignment (Critical for marketplace permissions)
+  serviceTypeId         String?             // Links to specific service ID (1-140)
+  
   // Relations
+  serviceType           ServiceType?        @relation(fields: [serviceTypeId], references: [id])
   profile               Profile?
   subscription          Subscription?
   wallet                Wallet?
@@ -356,7 +465,7 @@ model User {
   serviceBookingsAsClient   Booking[]       @relation("ClientBookings")
   serviceBookingsAsProvider Booking[]       @relation("ProviderBookings")
   
-  // Market Listings
+  // Market Listings (access controlled by serviceType permissions)
   vehicleListings       VehicleListing[]
   propertyListings      PropertyListing[]
   productListings       ProductListing[]
@@ -396,6 +505,11 @@ model User {
   // Verification Documents
   verificationDocuments VerificationDocument[]
   
+  // Document Verifications
+  vehicleDocuments      VehicleDocument[]
+  propertyDocuments     PropertyDocument[]
+  documentVerifications DocumentVerification[]
+  
   // Sessions & Tokens
   sessions              Session[]
   refreshTokens         RefreshToken[]
@@ -408,6 +522,13 @@ model User {
   // Talent Pool
   talentPoolEntry       TalentPoolEntry?
   
+  // Rating Invitations
+  ratingInvitations     RatingInvitation[]
+  
+  // Zainpay Integration
+  zainpayWebhooks       ZainpayWebhook[]
+  virtualAccount        VirtualAccount?
+  
   @@index([email])
   @@index([phone])
   @@index([status])
@@ -415,6 +536,8 @@ model User {
   @@index([isOpenToWork])
   @@index([isCurrentlyHiring])
   @@index([state, city])
+  @@index([serviceTypeId])
+  @@index([profileShareToken])
   @@map("users")
 }
 
@@ -457,6 +580,11 @@ model Profile {
   // Service Areas
   serviceAreas          String[]
   serviceRadius         Int?                // in km
+  
+  // Market-specific Stats
+  vehicleDealership     Boolean             @default(false)
+  realEstateAgency      Boolean             @default(false)
+  propertyManagement    Boolean             @default(false)
   
   // Timestamps
   createdAt             DateTime            @default(now())
@@ -515,28 +643,76 @@ model OTP {
   @@map("otps")
 }
 
+// ===========================================
+// VERIFICATION MODELS - ENHANCED
+// ===========================================
+
 model VerificationDocument {
-  id            String              @id @default(cuid())
-  userId        String
-  type          String              // id_card, business_registration, cac, drivers_license, vehicle_registration, property_deed
-  documentUrl   String
-  status        String              @default("pending") // pending, approved, rejected
-  rejectionReason String?
-  verifiedBy    String?
-  verifiedAt    DateTime?
-  createdAt     DateTime            @default(now())
-  updatedAt     DateTime            @updatedAt
+  id                    String              @id @default(cuid())
+  userId                String
   
-  user          User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Document Details
+  type                  DocumentType
+  requirement           DocumentRequirement @default(PHOTO_OF_ORIGINAL)  // Must be picture of original
+  documentUrl           String
+  thumbnailUrl          String?
+  
+  // Document Metadata (for pictures)
+  fileType              String              // image/jpeg, image/png, application/pdf
+  fileSize              Int?                // in bytes
+  dimensions            Json?               // { width: number, height: number }
+  captureTimestamp      DateTime?           // When photo was taken
+  geolocation           Json?               // { lat: number, lng: number }
+  
+  // Processing
+  status                DocumentStatus      @default(PENDING)
+  rejectionReason       String?
+  verifiedBy            String?
+  verifiedAt            DateTime?
+  
+  // Quality Checks
+  isLegible             Boolean?            @default(true)
+  ocrText               String?             @db.Text
+  validationScore       Float?              // 0-1 confidence score
+  
+  createdAt             DateTime            @default(now())
+  updatedAt             DateTime            @updatedAt
+  
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  verifications         DocumentVerification[]
   
   @@index([userId])
   @@index([type])
   @@index([status])
+  @@index([requirement])
   @@map("verification_documents")
 }
 
+model DocumentVerification {
+  id                    String              @id @default(cuid())
+  documentId            String
+  userId                String
+  
+  verificationMethod    String              // manual, automated, third_party, partner
+  qualityScore          Float?              // 0-1
+  isLegible             Boolean?
+  ocrConfidence         Float?
+  validationErrors      String[]
+  notes                 String?
+  
+  verifiedAt            DateTime?
+  createdAt             DateTime            @default(now())
+  
+  document              VerificationDocument @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  user                  User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([documentId])
+  @@index([userId])
+  @@map("document_verifications")
+}
+
 // ===========================================
-// SUBSCRIPTION & PAYMENT MODELS
+// SUBSCRIPTION & PAYMENT MODELS - ENHANCED
 // ===========================================
 
 model Subscription {
@@ -546,7 +722,7 @@ model Subscription {
   tier              SubscriptionTier    @default(FREE)
   status            SubscriptionStatus  @default(ACTIVE)
   
-  // Limits based on tier
+  // Limits based on tier (from workflow document)
   freeServiceListings   Int             @default(1)
   freeVehicleSlots      Int             @default(1)
   freePropertySlots     Int             @default(1)
@@ -559,6 +735,11 @@ model Subscription {
   usedPropertySlots     Int             @default(0)
   usedProductSlots      Int             @default(0)
   usedFeaturedThisMonth Int             @default(0)
+  
+  // Visibility Permissions (Critical for external payments)
+  isContactInfoVisible  Boolean         @default(false)  // FREE: false, SUBSCRIBED: true
+  isPaymentInfoVisible  Boolean         @default(false)  // FREE: false, SUBSCRIBED: true
+  canViewExternalLinks  Boolean         @default(false)  // FREE: false, SUBSCRIBED: true
   
   // Billing
   price             Float               @default(0)
@@ -591,14 +772,58 @@ model Wallet {
   virtualAccountNumber String?
   virtualAccountBank   String?
   virtualAccountName   String?
+  virtualAccountStatus String           @default("active") // active, inactive
+  
+  // Auto Settlement
+  autoSettlementEnabled Boolean         @default(false)
+  settlementAccountNumber String?
+  settlementBankCode   String?
+  settlementPercentage Float?           // Percentage to settle
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   
   user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   transactions      Transaction[]
+  virtualAccount    VirtualAccount?
   
   @@map("wallets")
+}
+
+model VirtualAccount {
+  id                String              @id @default(cuid())
+  userId            String              @unique
+  walletId          String?             @unique  // FIXED: Added @unique for one-to-one relation
+  
+  // Account Details
+  accountNumber     String              @unique
+  accountName       String
+  bankCode          String
+  bankName          String
+  bankType          String              // gtBank, fidelity, fcmb
+  
+  // Zainpay Metadata
+  zainboxCode       String?
+  virtualAccountId  String?             // Zainpay internal ID
+  status            String              @default("active")
+  
+  // Dynamic Account (for one-time payments)
+  isDynamic         Boolean             @default(false)
+  dynamicAmount     Float?
+  dynamicExpiresAt  DateTime?
+  dynamicTxnRef     String?
+  dynamicCallbackUrl String?
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  wallet            Wallet?             @relation(fields: [walletId], references: [id])
+  
+  @@index([userId])
+  @@index([accountNumber])
+  @@index([zainboxCode])
+  @@map("virtual_accounts")
 }
 
 model Transaction {
@@ -620,6 +845,12 @@ model Transaction {
   paymentRef        String?
   gatewayResponse   Json?
   
+  // External Payment Tracking (for marketplace transactions)
+  isExternal        Boolean             @default(false)
+  externalReference String?             // External system reference
+  externalPlatform  String?             // Platform where payment occurred
+  externalPaymentMethod String?         // Method used externally
+  
   description       String?
   metadata          Json?
   
@@ -635,11 +866,37 @@ model Transaction {
   @@index([txnRef])
   @@index([status])
   @@index([type])
+  @@index([isExternal])
   @@map("transactions")
 }
 
+model ZainpayWebhook {
+  id                String              @id @default(cuid())
+  userId            String
+  zainboxCode       String?
+  
+  eventType         ZainpayEventType
+  payload           Json
+  signature         String
+  isVerified        Boolean             @default(false)
+  verificationError String?
+  
+  processedAt       DateTime?
+  processingError   String?
+  
+  createdAt         DateTime            @default(now())
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([zainboxCode])
+  @@index([eventType])
+  @@index([createdAt])
+  @@map("zainpay_webhooks")
+}
+
 // ===========================================
-// SERVICE MODELS
+// SERVICE MODELS - ENHANCED WITH PERMISSIONS
 // ===========================================
 
 model ServiceCategory {
@@ -668,13 +925,21 @@ model ServiceType {
   id                String              @id @default(cuid())
   categoryId        String
   
-  serviceId         Int                 @unique  // The ID from the README (1-140)
+  // Critical: The service ID from workflow (1-140)
+  serviceId         Int                 @unique
   name              String
   slug              String              @unique
   description       String?             @db.Text
   icon              String?
   
-  // Special Permissions
+  // Service Category Mapping
+  workflowCategory  String              // Auto & Transport, Home & Property, Lifestyle & Professional
+  
+  // Permission System (Critical for marketplace access)
+  permissions       ServicePermission[]
+  allowedMarketModules String[]         // ["vehicle", "property", "general", "financial"]
+  
+  // Special Permissions based on service ID
   hasVehicleMarketAccess   Boolean      @default(false)
   hasPropertyMarketAccess  Boolean      @default(false)
   isFinancialService       Boolean      @default(false)
@@ -687,8 +952,14 @@ model ServiceType {
   
   category          ServiceCategory     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   services          Service[]
+  users             User[]
+  squads            Squad[]             // FIXED: Added opposite relation field
   
   @@index([categoryId])
+  @@index([serviceId])
+  @@index([workflowCategory])
+  @@index([hasVehicleMarketAccess])
+  @@index([hasPropertyMarketAccess])
   @@map("service_types")
 }
 
@@ -728,6 +999,10 @@ model Service {
   isFeatured        Boolean             @default(false)
   featuredUntil     DateTime?
   
+  // Subscription Enforcement
+  isUsingFreeSlot   Boolean             @default(true)
+  subscriptionTierUsed SubscriptionTier?
+  
   // Stats
   viewCount         Int                 @default(0)
   inquiryCount      Int                 @default(0)
@@ -748,6 +1023,7 @@ model Service {
   @@index([status])
   @@index([isFeatured])
   @@index([state, city])
+  @@index([isUsingFreeSlot])
   @@map("services")
 }
 
@@ -767,11 +1043,12 @@ model Booking {
   latitude          Float?
   longitude         Float?
   
-  // Pricing
+  // Pricing (In-app payment via Zainpay)
   agreedPrice       Float?
   currency          String              @default("NGN")
   depositAmount     Float?
   depositPaid       Boolean             @default(false)
+  depositTxnRef     String?             // Zainpay transaction reference
   
   // Status
   status            BookingStatus       @default(PENDING)
@@ -785,6 +1062,10 @@ model Booking {
   cancelledAt       DateTime?
   cancellationReason String?
   
+  // Rating Tracking
+  ratingInvitationSent Boolean          @default(false)
+  ratingDeadline      DateTime?         // 48 hours after completion
+  
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   
@@ -792,17 +1073,19 @@ model Booking {
   client            User                @relation("ClientBookings", fields: [clientId], references: [id])
   provider          User                @relation("ProviderBookings", fields: [providerId], references: [id])
   ratings           Rating[]
+  ratingInvitation  RatingInvitation?
   
   @@index([serviceId])
   @@index([clientId])
   @@index([providerId])
   @@index([status])
   @@index([scheduledDate])
+  @@index([ratingDeadline])
   @@map("bookings")
 }
 
 // ===========================================
-// VEHICLE MARKET MODELS
+// VEHICLE MARKET MODELS - ENHANCED
 // ===========================================
 
 model VehicleListing {
@@ -819,11 +1102,13 @@ model VehicleListing {
   
   // Vehicle Details
   vehicleType       VehicleType
+  vehicleSubtype    VehicleSubtype?
   make              String
   model             String
   year              Int
   trim              String?
   vin               String?
+  vinVerified       Boolean             @default(false)
   
   // Specifications
   mileage           Int?
@@ -868,16 +1153,20 @@ model VehicleListing {
   
   // Verification
   verificationLevel VerificationLevel   @default(UNVERIFIED)
-  vinVerified       Boolean             @default(false)
   documentsVerified Boolean             @default(false)
   
-  // External Payment Info
+  // External Payment Info (visibility controlled by subscription)
   preferredPaymentMethods String[]
   bankName          String?
   bankAccountNumber String?
   bankAccountName   String?
+  bankCode          String?
   externalPaymentLink String?
   financingAvailable Boolean            @default(false)
+  
+  // Visibility Controls
+  contactInfoVisibility TransactionVisibility @default(SUBSCRIBED_ONLY)
+  paymentInfoVisibility TransactionVisibility @default(SUBSCRIBED_ONLY)
   
   // Publication Settings
   status            ListingStatus       @default(DRAFT)
@@ -885,13 +1174,20 @@ model VehicleListing {
   showFullAddress   Boolean             @default(false)
   allowTestDrive    Boolean             @default(true)
   
+  // Featured Listing (paid in-app via Zainpay)
   isFeatured        Boolean             @default(false)
   featuredUntil     DateTime?
+  featuredTxnRef    String?             // Zainpay transaction reference
   
   // Stats
   viewCount         Int                 @default(0)
   inquiryCount      Int                 @default(0)
   saveCount         Int                 @default(0)
+  testDriveCount    Int                 @default(0)
+  
+  // Subscription Enforcement
+  isUsingFreeSlot   Boolean             @default(true)
+  subscriptionTierUsed SubscriptionTier?
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
@@ -912,24 +1208,38 @@ model VehicleListing {
   @@index([isFeatured])
   @@index([state, city])
   @@index([listingType])
+  @@index([verificationLevel])
   @@map("vehicle_listings")
 }
 
 model VehicleDocument {
   id                String              @id @default(cuid())
   vehicleListingId  String
+  userId            String
   
-  type              String              // vin_photo, registration, insurance, inspection, ownership, mileage
+  type              DocumentType        // vin_photo, registration, insurance, etc.
+  requirement       DocumentRequirement @default(PHOTO_OF_ORIGINAL)
   documentUrl       String
-  status            String              @default("pending") // pending, verified, rejected
+  thumbnailUrl      String?
+  
+  // Document Metadata
+  fileType          String              // image/jpeg, image/png
+  fileSize          Int?
+  captureTimestamp  DateTime?
+  
+  status            DocumentStatus      @default(PENDING)
   verifiedAt        DateTime?
+  verificationNotes String?
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   
   vehicleListing    VehicleListing      @relation(fields: [vehicleListingId], references: [id], onDelete: Cascade)
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@index([vehicleListingId])
+  @@index([type])
+  @@index([status])
   @@map("vehicle_documents")
 }
 
@@ -937,11 +1247,16 @@ model TestDriveSchedule {
   id                String              @id @default(cuid())
   vehicleListingId  String
   buyerId           String
+  sellerId          String
   
   scheduledDate     DateTime
   scheduledTime     String
   status            String              @default("pending") // pending, confirmed, completed, cancelled
   notes             String?
+  
+  // Contact Info (only visible to subscribed users)
+  buyerContactVisible Boolean           @default(false)
+  sellerContactVisible Boolean          @default(false)
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
@@ -950,6 +1265,8 @@ model TestDriveSchedule {
   
   @@index([vehicleListingId])
   @@index([buyerId])
+  @@index([sellerId])
+  @@index([scheduledDate])
   @@map("test_drive_schedules")
 }
 
@@ -963,30 +1280,41 @@ model VehicleTransaction {
   agreedPrice       Float
   currency          String              @default("NGN")
   
+  // External Payment Tracking
+  isExternal        Boolean             @default(true)  // All vehicle payments are external
+  externalReference String?             // External payment reference
+  externalPlatform  String?             // Where payment occurred
+  externalPaymentMethod String?         // Method used
+  
   status            String              @default("pending") // pending, completed, cancelled
   completedAt       DateTime?
   
+  // Communication
   buyerNotes        String?
   sellerNotes       String?
   
-  // Rating tracking
+  // Rating tracking (48-hour window)
   buyerRated        Boolean             @default(false)
   sellerRated       Boolean             @default(false)
-  ratingDeadline    DateTime?
+  ratingDeadline    DateTime?           // 48 hours from completion
+  ratingReminderSent Boolean            @default(false)
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   
   vehicleListing    VehicleListing      @relation(fields: [vehicleListingId], references: [id], onDelete: Cascade)
+  ratingInvitations RatingInvitation[]
   
   @@index([vehicleListingId])
   @@index([buyerId])
   @@index([sellerId])
+  @@index([status])
+  @@index([ratingDeadline])
   @@map("vehicle_transactions")
 }
 
 // ===========================================
-// REAL ESTATE MARKET MODELS
+// REAL ESTATE MARKET MODELS - ENHANCED
 // ===========================================
 
 model PropertyListing {
@@ -1052,13 +1380,18 @@ model PropertyListing {
   ownershipType     String?             // owner, agent, manager
   ownerAuthorization Boolean            @default(false)
   
-  // External Payment Info
+  // External Payment Info (visibility controlled by subscription)
   preferredPaymentMethods String[]
   bankName          String?
   bankAccountNumber String?
   bankAccountName   String?
+  bankCode          String?
   externalPaymentLink String?
   mortgageAvailable Boolean             @default(false)
+  
+  // Visibility Controls
+  contactInfoVisibility TransactionVisibility @default(SUBSCRIBED_ONLY)
+  paymentInfoVisibility TransactionVisibility @default(SUBSCRIBED_ONLY)
   
   // Publication Settings
   status            ListingStatus       @default(DRAFT)
@@ -1067,13 +1400,20 @@ model PropertyListing {
   showFullAddress   Boolean             @default(false)
   allowViewingSchedule Boolean          @default(true)
   
+  // Featured Listing (paid in-app via Zainpay)
   isFeatured        Boolean             @default(false)
   featuredUntil     DateTime?
+  featuredTxnRef    String?             // Zainpay transaction reference
   
   // Stats
   viewCount         Int                 @default(0)
   inquiryCount      Int                 @default(0)
   saveCount         Int                 @default(0)
+  viewingCount      Int                 @default(0)
+  
+  // Subscription Enforcement
+  isUsingFreeSlot   Boolean             @default(true)
+  subscriptionTierUsed SubscriptionTier?
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
@@ -1094,24 +1434,38 @@ model PropertyListing {
   @@index([isFeatured])
   @@index([state, city])
   @@index([listingType])
+  @@index([verificationLevel])
   @@map("property_listings")
 }
 
 model PropertyDocument {
   id                String              @id @default(cuid())
   propertyListingId String
+  userId            String
   
-  type              String              // deed, c_of_o, survey_plan, building_approval, owner_authorization
+  type              DocumentType        // deed, c_of_o, survey_plan, etc.
+  requirement       DocumentRequirement @default(PHOTO_OF_ORIGINAL)
   documentUrl       String
-  status            String              @default("pending")
+  thumbnailUrl      String?
+  
+  // Document Metadata
+  fileType          String              // image/jpeg, image/png
+  fileSize          Int?
+  captureTimestamp  DateTime?
+  
+  status            DocumentStatus      @default(PENDING)
   verifiedAt        DateTime?
+  verificationNotes String?
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   
   propertyListing   PropertyListing     @relation(fields: [propertyListingId], references: [id], onDelete: Cascade)
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@index([propertyListingId])
+  @@index([type])
+  @@index([status])
   @@map("property_documents")
 }
 
@@ -1119,11 +1473,16 @@ model ViewingSchedule {
   id                String              @id @default(cuid())
   propertyListingId String
   viewerId          String
+  agentOwnerId      String
   
   scheduledDate     DateTime
   scheduledTime     String
-  status            String              @default("pending")
+  status            String              @default("pending") // pending, confirmed, completed, cancelled
   notes             String?
+  
+  // Contact Info (only visible to subscribed users)
+  viewerContactVisible Boolean          @default(false)
+  agentContactVisible  Boolean          @default(false)
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
@@ -1132,6 +1491,8 @@ model ViewingSchedule {
   
   @@index([propertyListingId])
   @@index([viewerId])
+  @@index([agentOwnerId])
+  @@index([scheduledDate])
   @@map("viewing_schedules")
 }
 
@@ -1145,25 +1506,37 @@ model PropertyTransaction {
   agreedPrice       Float
   currency          String              @default("NGN")
   
-  status            String              @default("pending")
+  // External Payment Tracking
+  isExternal        Boolean             @default(true)  // All property payments are external
+  externalReference String?             // External payment reference
+  externalPlatform  String?             // Where payment occurred
+  externalPaymentMethod String?         // Method used
+  
+  status            String              @default("pending") // pending, completed, cancelled
   completedAt       DateTime?
   
-  // Rating tracking
+  // Rating tracking (48-hour window)
   buyerRenterRated  Boolean             @default(false)
   sellerLandlordRated Boolean           @default(false)
-  ratingDeadline    DateTime?
+  ratingDeadline    DateTime?           // 48 hours from completion
+  ratingReminderSent Boolean            @default(false)
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   
   propertyListing   PropertyListing     @relation(fields: [propertyListingId], references: [id], onDelete: Cascade)
+  ratingInvitations RatingInvitation[]
   
   @@index([propertyListingId])
+  @@index([buyerRenterId])
+  @@index([sellerLandlordId])
+  @@index([status])
+  @@index([ratingDeadline])
   @@map("property_transactions")
 }
 
 // ===========================================
-// GENERAL MARKET MODELS
+// GENERAL MARKET MODELS - ENHANCED
 // ===========================================
 
 model ProductListing {
@@ -1212,24 +1585,35 @@ model ProductListing {
   images            String[]
   videos            String[]
   
-  // External Payment Info
+  // External Payment Info (visibility controlled by subscription)
   preferredPaymentMethods String[]
   bankName          String?
   bankAccountNumber String?
   bankAccountName   String?
+  bankCode          String?
   externalPaymentLink String?
+  
+  // Visibility Controls
+  contactInfoVisibility TransactionVisibility @default(SUBSCRIBED_ONLY)
+  paymentInfoVisibility TransactionVisibility @default(SUBSCRIBED_ONLY)
   
   // Publication Settings
   status            ListingStatus       @default(DRAFT)
   contactPreference ContactPreference   @default(ALL)
   
+  // Featured Listing (paid in-app via Zainpay)
   isFeatured        Boolean             @default(false)
   featuredUntil     DateTime?
+  featuredTxnRef    String?             // Zainpay transaction reference
   
   // Stats
   viewCount         Int                 @default(0)
   inquiryCount      Int                 @default(0)
   saveCount         Int                 @default(0)
+  
+  // Subscription Enforcement
+  isUsingFreeSlot   Boolean             @default(true)
+  subscriptionTierUsed SubscriptionTier?
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
@@ -1246,6 +1630,7 @@ model ProductListing {
   @@index([status])
   @@index([isFeatured])
   @@index([state, city])
+  @@index([listingType])
   @@map("product_listings")
 }
 
@@ -1259,25 +1644,41 @@ model ProductTransaction {
   agreedPrice       Float
   currency          String              @default("NGN")
   
-  status            String              @default("pending")
+  // External Payment Tracking
+  isExternal        Boolean             @default(true)  // All general market payments are external
+  externalReference String?             // External payment reference
+  externalPlatform  String?             // Where payment occurred
+  externalPaymentMethod String?         // Method used
+  
+  status            String              @default("pending") // pending, completed, cancelled
   completedAt       DateTime?
   
-  // Rating tracking
+  // Delivery Tracking
+  deliveryTracking  String?
+  deliveryStatus    String?
+  
+  // Rating tracking (48-hour window)
   buyerRated        Boolean             @default(false)
   sellerRated       Boolean             @default(false)
-  ratingDeadline    DateTime?
+  ratingDeadline    DateTime?           // 48 hours from completion
+  ratingReminderSent Boolean            @default(false)
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   
   productListing    ProductListing      @relation(fields: [productListingId], references: [id], onDelete: Cascade)
+  ratingInvitations RatingInvitation[]
   
   @@index([productListingId])
+  @@index([buyerId])
+  @@index([sellerId])
+  @@index([status])
+  @@index([ratingDeadline])
   @@map("product_transactions")
 }
 
 // ===========================================
-// JOB MODELS
+// JOB MODELS - ENHANCED
 // ===========================================
 
 model Job {
@@ -1307,7 +1708,7 @@ model Job {
   // Location
   country           String              @default("Nigeria")
   state             String?
-  city              String?
+  city             String?
   isRemote          Boolean             @default(false)
   
   // Application
@@ -1319,6 +1720,7 @@ model Job {
   status            JobStatus           @default(OPEN)
   isFeatured        Boolean             @default(false)
   featuredUntil     DateTime?
+  featuredTxnRef    String?             // Zainpay transaction reference
   
   // Stats
   viewCount         Int                 @default(0)
@@ -1330,6 +1732,8 @@ model Job {
   
   poster            User                @relation("JobPoster", fields: [posterId], references: [id], onDelete: Cascade)
   applications      JobApplication[]
+  ratings           Rating[]             // FIXED: Added opposite relation field
+  favorites         Favorite[]           // FIXED: Added opposite relation field
   
   @@index([posterId])
   @@index([jobType])
@@ -1370,7 +1774,7 @@ model JobApplication {
 }
 
 // ===========================================
-// STAFF & SQUAD MODELS
+// STAFF & SQUAD MODELS - ENHANCED
 // ===========================================
 
 model Staff {
@@ -1390,11 +1794,18 @@ model Staff {
   // Permissions
   permissions       String[]
   
+  // Rating tracking for termination
+  employerRated     Boolean             @default(false)
+  employeeRated     Boolean             @default(false)
+  ratingDeadline    DateTime?
+  
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   
   employer          User                @relation("Employer", fields: [employerId], references: [id], onDelete: Cascade)
   employee          User                @relation("Employee", fields: [employeeId], references: [id], onDelete: Cascade)
+  ratings           Rating[]            // FIXED: Added opposite relation field
+  ratingInvitations RatingInvitation[] // FIXED: Added opposite relation field
   
   @@unique([employerId, employeeId])
   @@index([employerId])
@@ -1413,9 +1824,14 @@ model Squad {
   logo              String?
   coverImage        String?
   
+  // Service Type Association (for marketplace permissions)
+  serviceTypeId     String?
+  
   // Verification
   status            SquadStatus         @default(PENDING_VERIFICATION)
   verifiedAt        DateTime?
+  verificationFeePaid Boolean           @default(false)
+  verificationTxnRef String?            // Zainpay transaction reference
   
   // Stats
   memberCount       Int                 @default(1)
@@ -1425,10 +1841,12 @@ model Squad {
   updatedAt         DateTime            @updatedAt
   
   owner             User                @relation("SquadOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  serviceType       ServiceType?        @relation(fields: [serviceTypeId], references: [id])
   members           SquadMember[]
   
   @@index([ownerId])
   @@index([status])
+  @@index([serviceTypeId])
   @@map("squads")
 }
 
@@ -1460,8 +1878,12 @@ model ChatRoom {
   description       String?
   image             String?
   
-  type              String              @default("direct") // direct, group, community
+  type              String              @default("direct") // direct, group, community, marketplace
   isPublic          Boolean             @default(false)
+  
+  // For marketplace chats
+  listingType       String?             // vehicle, property, product, service, job
+  listingId         String?
   
   // For community rooms
   topic             String?
@@ -1473,6 +1895,8 @@ model ChatRoom {
   members           ChatRoomMember[]
   messages          Message[]
   
+  @@index([type])
+  @@index([listingType, listingId])
   @@map("chat_rooms")
 }
 
@@ -1505,9 +1929,15 @@ model Message {
   type              MessageType         @default(TEXT)
   content           String?             @db.Text
   mediaUrl          String?
+  mediaThumbnail    String?
   
   // Reply
   replyToId         String?
+  
+  // For marketplace messages
+  isMarketplaceInquiry Boolean          @default(false)
+  listingType       String?             // vehicle, property, product, service
+  listingId         String?
   
   isEdited          Boolean             @default(false)
   isDeleted         Boolean             @default(false)
@@ -1523,11 +1953,12 @@ model Message {
   @@index([chatRoomId])
   @@index([senderId])
   @@index([createdAt])
+  @@index([isMarketplaceInquiry])
   @@map("messages")
 }
 
 // ===========================================
-// RATING & REVIEW MODELS
+// RATING & REVIEW MODELS - ENHANCED
 // ===========================================
 
 model Rating {
@@ -1543,18 +1974,21 @@ model Rating {
   vehicleListingId  String?
   propertyListingId String?
   productListingId  String?
+  jobId             String?
+  staffId           String?
   
   // Ratings (1-5)
   overallRating     Int
   
-  // Category-specific ratings
-  qualityRating     Int?
-  punctualityRating Int?
-  communicationRating Int?
-  valueRating       Int?
-  accuracyRating    Int?
-  conditionRating   Int?
-  transactionRating Int?
+  // Category-specific ratings (from workflow)
+  qualityRating     Int?                // For services
+  punctualityRating Int?                // For services
+  communicationRating Int?              // For services, vehicles, properties, products
+  valueRating       Int?                // For services
+  
+  accuracyRating    Int?                // For vehicles, properties, products
+  conditionRating   Int?                // For vehicles, properties, products
+  transactionRating Int?                // For vehicles, properties, products
   
   // Review
   review            String?             @db.VarChar(500)
@@ -1563,6 +1997,9 @@ model Rating {
   isVisible         Boolean             @default(true)
   isReported        Boolean             @default(false)
   moderatedAt       DateTime?
+  
+  // Rating Invitation Tracking
+  ratingInvitationId String?            @unique  // FIXED: Added @unique for one-to-one relation
   
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
@@ -1574,12 +2011,16 @@ model Rating {
   vehicleListing    VehicleListing?     @relation(fields: [vehicleListingId], references: [id])
   propertyListing   PropertyListing?    @relation(fields: [propertyListingId], references: [id])
   productListing    ProductListing?     @relation(fields: [productListingId], references: [id])
+  job               Job?                @relation(fields: [jobId], references: [id])
+  staff             Staff?              @relation(fields: [staffId], references: [id])
   response          ReviewResponse?
+  ratingInvitation  RatingInvitation?   @relation(fields: [ratingInvitationId], references: [id])
   
   @@index([giverId])
   @@index([receiverId])
   @@index([category])
   @@index([createdAt])
+  @@index([ratingInvitationId])
   @@map("ratings")
 }
 
@@ -1599,6 +2040,49 @@ model ReviewResponse {
   @@map("review_responses")
 }
 
+model RatingInvitation {
+  id                String              @id @default(cuid())
+  userId            String
+  transactionId     String?
+  transactionType   String              // booking, vehicle, property, product, staff
+  
+  // Use separate fields instead of a single entityId for multiple relations
+  bookingId         String?              @unique
+  vehicleTransactionId String?
+  propertyTransactionId String?
+  productTransactionId String?
+  staffId           String?
+  
+  // 48-hour window enforcement
+  expiresAt         DateTime
+  sentAt            DateTime?
+  remindedAt        DateTime?
+  
+  status            String              @default("pending") // pending, sent, completed, expired
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  
+  user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  booking           Booking?            @relation(fields: [bookingId], references: [id])
+  vehicleTransaction VehicleTransaction? @relation(fields: [vehicleTransactionId], references: [id])
+  propertyTransaction PropertyTransaction? @relation(fields: [propertyTransactionId], references: [id])
+  productTransaction ProductTransaction? @relation(fields: [productTransactionId], references: [id])
+  staff             Staff?              @relation(fields: [staffId], references: [id])
+  rating            Rating?
+  
+  @@index([userId])
+  @@index([expiresAt])
+  @@index([status])
+  @@index([transactionType])
+  @@index([bookingId])
+  @@index([vehicleTransactionId])
+  @@index([propertyTransactionId])
+  @@index([productTransactionId])
+  @@index([staffId])
+  @@map("rating_invitations")
+}
+
 // ===========================================
 // FAVORITES MODEL
 // ===========================================
@@ -1612,6 +2096,7 @@ model Favorite {
   vehicleListingId  String?
   propertyListingId String?
   productListingId  String?
+  jobId             String?
   
   createdAt         DateTime            @default(now())
   
@@ -1620,17 +2105,19 @@ model Favorite {
   vehicleListing    VehicleListing?     @relation(fields: [vehicleListingId], references: [id], onDelete: Cascade)
   propertyListing   PropertyListing?    @relation(fields: [propertyListingId], references: [id], onDelete: Cascade)
   productListing    ProductListing?     @relation(fields: [productListingId], references: [id], onDelete: Cascade)
+  job               Job?                @relation(fields: [jobId], references: [id], onDelete: Cascade)
   
   @@unique([userId, serviceId])
   @@unique([userId, vehicleListingId])
   @@unique([userId, propertyListingId])
   @@unique([userId, productListingId])
+  @@unique([userId, jobId])
   @@index([userId])
   @@map("favorites")
 }
 
 // ===========================================
-// NOTIFICATION MODEL
+// NOTIFICATION MODEL - ENHANCED
 // ===========================================
 
 model Notification {
@@ -1645,16 +2132,21 @@ model Notification {
   actionUrl         String?
   metadata          Json?
   
+  // AI Insights integration
+  aiInsightId       String?
+  
   isRead            Boolean             @default(false)
   readAt            DateTime?
   
   createdAt         DateTime            @default(now())
   
   user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  aiInsight         AIInsight?          @relation(fields: [aiInsightId], references: [id])
   
   @@index([userId])
   @@index([isRead])
   @@index([createdAt])
+  @@index([aiInsightId])
   @@map("notifications")
 }
 
@@ -1693,21 +2185,28 @@ model Report {
 }
 
 // ===========================================
-// AI INSIGHTS MODEL
+// AI INSIGHTS MODEL - ENHANCED WITH RAG SYSTEM
 // ===========================================
 
 model AIInsight {
   id                String              @id @default(cuid())
   userId            String
   
-  type              String              // market_insight, pricing_recommendation, demand_forecast, competitor_analysis
-  category          String?             // service, vehicle, property, product
+  type              AIInsightType
+  category          String?             // service, vehicle, property, product, general
   
   title             String
   content           String              @db.Text
   
+  // RAG System Integration
   data              Json?               // Structured insight data
   confidence        Float?              // 0-1 confidence score
+  sources           Json?               // Retrieved context sources from Pinecone
+  vectorIds         String[]            // Pinecone vector IDs used
+  queryId           String?             // Related AI query
+  
+  // Free Tier Limitations
+  tierAccess        SubscriptionTier    @default(FREE)  // Minimum tier required
   
   isRead            Boolean             @default(false)
   readAt            DateTime?
@@ -1717,20 +2216,52 @@ model AIInsight {
   createdAt         DateTime            @default(now())
   
   user              User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+  aiQuery           AIQuery?            @relation(fields: [queryId], references: [id])
+  notifications     Notification[]
   
   @@index([userId])
   @@index([type])
   @@index([createdAt])
+  @@index([tierAccess])
   @@map("ai_insights")
 }
 
+model AIQuery {
+  id          String   @id @default(cuid())
+  userId      String
+  query       String   @db.Text
+  response    Json?
+  intent      String?
+  module      String?  // vehicle, property, service, general
+  metadata    Json?
+  
+  // RAG System Integration
+  vectorEmbedding Json?               // Pinecone vector embedding
+  contextWindowSize Int?              // 128K, 64K, etc.
+  pineconeIndexId String?             // Pinecone index used
+  responseSources Json?               // Retrieved context sources
+  
+  createdAt   DateTime @default(now())
+  
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  insights    AIInsight[]
+  
+  @@index([userId])
+  @@index([module])
+  @@index([createdAt])
+  @@map("ai_queries")
+}
+
 // ===========================================
-// FINANCIAL SERVICE MODELS
+// FINANCIAL SERVICE MODELS - ENHANCED
 // ===========================================
 
 model InsurancePackage {
   id                String              @id @default(cuid())
   providerId        String
+  
+  // Provider Type (linked to ServiceType IDs)
+  providerType      String              // general (135), property (137), vehicle (138)
   
   name              String
   description       String              @db.Text
@@ -1749,12 +2280,16 @@ model InsurancePackage {
   
   @@index([providerId])
   @@index([type])
+  @@index([providerType])
   @@map("insurance_packages")
 }
 
 model FinancingPackage {
   id                String              @id @default(cuid())
   providerId        String
+  
+  // Provider Type (linked to ServiceType IDs)
+  providerType      String              // vehicle (136), property (139), general (140)
   
   name              String
   description       String              @db.Text
@@ -1778,7 +2313,64 @@ model FinancingPackage {
   
   @@index([providerId])
   @@index([type])
+  @@index([providerType])
   @@map("financing_packages")
+}
+
+// ===========================================
+// TALENT POOL MODEL - ENHANCED
+// ===========================================
+
+model TalentPoolEntry {
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  
+  headline      String?
+  skills        String[]
+  experience    Json?
+  expectedSalary Float?
+  availability  String?  // immediate, 2_weeks, 1_month
+  
+  // Visibility Controls
+  isActive      Boolean  @default(true)
+  isPublic      Boolean  @default(true)  // Can be discovered by employers
+  tierAccess    SubscriptionTier @default(FREE)  // Minimum tier to view
+  
+  lastUpdated   DateTime @updatedAt
+  createdAt     DateTime @default(now())
+  
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@index([isActive])
+  @@index([skills])
+  @@index([isPublic])
+  @@index([tierAccess])
+  @@map("talent_pool_entries")
+}
+
+// ===========================================
+// SUBSCRIPTION USAGE TRACKING
+// ===========================================
+
+model SubscriptionUsage {
+  id                    String       @id @default(cuid())
+  subscriptionId        String
+  period                String       // e.g., "2024-01"
+  
+  serviceListingsUsed   Int          @default(0)
+  vehicleListingsUsed   Int          @default(0)
+  propertyListingsUsed  Int          @default(0)
+  productListingsUsed   Int          @default(0)
+  featuredListingsUsed  Int          @default(0)
+  
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  
+  subscription          Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+  
+  @@unique([subscriptionId, period])
+  @@index([subscriptionId])
+  @@map("subscription_usages")
 }
 
 // ===========================================
@@ -1820,72 +2412,55 @@ model AuditLog {
 }
 
 // ===========================================
-// AI RAG SYSTEM MODELS
+// MARKETPLACE INQUIRY MODELS
 // ===========================================
 
-model AIQuery {
-  id          String   @id @default(cuid())
-  userId      String
-  query       String   @db.Text
-  response    Json?
-  intent      String?
-  module      String?  // vehicle, property, service, general
-  metadata    Json?
-  createdAt   DateTime @default(now())
+model MarketplaceInquiry {
+  id                String              @id @default(cuid())
+  listingId         String
+  listingType       String              // vehicle, property, product
+  inquirerId        String
+  ownerId           String
   
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  message           String              @db.Text
+  status            String              @default("pending") // pending, responded, closed
   
-  @@index([userId])
-  @@index([module])
-  @@map("ai_queries")
+  // Contact visibility
+  inquirerContactVisible Boolean        @default(false)  // Based on subscription
+  ownerContactVisible    Boolean        @default(true)
+  
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  respondedAt       DateTime?
+  
+  @@index([listingId, listingType])
+  @@index([inquirerId])
+  @@index([ownerId])
+  @@index([status])
+  @@map("marketplace_inquiries")
 }
 
 // ===========================================
-// TALENT POOL MODEL
+// SERVICE TYPE PERMISSION MAPPING
 // ===========================================
 
-model TalentPoolEntry {
-  id            String   @id @default(cuid())
-  userId        String   @unique
+model ServicePermissionMap {
+  id                String              @id @default(cuid())
+  serviceId         Int                 @unique  // 1-140
   
-  headline      String?
-  skills        String[]
-  experience    Json?
-  expectedSalary Float?
-  availability  String?  // immediate, 2_weeks, 1_month
+  // Permissions from workflow document
+  canPostVehicles   Boolean             @default(false)
+  canPostProperties Boolean             @default(false)
+  isFinancialProvider Boolean           @default(false)
+  isRealEstateProvider Boolean          @default(false)
+  isVehicleProvider Boolean             @default(false)
   
-  isActive      Boolean  @default(true)
-  lastUpdated   DateTime @updatedAt
-  createdAt     DateTime @default(now())
+  // Specific service IDs from workflow
+  specificRole      String?             // Vehicle Dealer, Real Estate Agent, etc.
   
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   
-  @@index([isActive])
-  @@index([skills])
-  @@map("talent_pool_entries")
-}
-
-// ===========================================
-// SUBSCRIPTION USAGE TRACKING
-// ===========================================
-
-model SubscriptionUsage {
-  id                    String       @id @default(cuid())
-  subscriptionId        String
-  period                String       // e.g., "2024-01"
-  
-  serviceListingsUsed   Int          @default(0)
-  vehicleListingsUsed   Int          @default(0)
-  propertyListingsUsed  Int          @default(0)
-  productListingsUsed   Int          @default(0)
-  featuredListingsUsed  Int          @default(0)
-  
-  createdAt             DateTime     @default(now())
-  updatedAt             DateTime     @updatedAt
-  
-  subscription          Subscription @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
-  
-  @@unique([subscriptionId, period])
-  @@index([subscriptionId])
-  @@map("subscription_usages")
+  @@index([serviceId])
+  @@map("service_permission_maps")
 }
