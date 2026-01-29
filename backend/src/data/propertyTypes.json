@@ -1,338 +1,293 @@
 {
-  "propertyTypes": [
-    {
-      "type": "RESIDENTIAL",
-      "name": "Residential Property",
-      "slug": "residential",
-      "description": "Properties designed for living purposes",
-      "icon": "home",
-      "subtypes": [
-        {
-          "subtype": "APARTMENT",
-          "name": "Apartment/Flat",
-          "slug": "apartment",
-          "description": "Self-contained unit within a larger building",
-          "features": ["self-contained", "shared-building", "multi-family"],
-          "popularIn": ["Lagos", "Abuja", "Port Harcourt"]
-        },
-        {
-          "subtype": "BUNGALOW",
-          "name": "Bungalow",
-          "slug": "bungalow",
-          "description": "Single-story detached house",
-          "features": ["single-floor", "detached", "compound"],
-          "popularIn": ["All states"]
-        },
-        {
-          "subtype": "DUPLEX",
-          "name": "Duplex",
-          "slug": "duplex",
-          "description": "Two-story house with living areas on both floors",
-          "features": ["two-floors", "family-size", "compound"],
-          "popularIn": ["Lagos", "Abuja", "Ibadan", "Kano"]
-        },
-        {
-          "subtype": "TERRACE",
-          "name": "Terrace House",
-          "slug": "terrace",
-          "description": "Row house sharing walls with neighbors",
-          "features": ["shared-walls", "estate", "uniform-design"],
-          "popularIn": ["Lagos", "Abuja"]
-        },
-        {
-          "subtype": "DETACHED_HOUSE",
-          "name": "Detached House",
-          "slug": "detached-house",
-          "description": "Standalone house not sharing walls",
-          "features": ["standalone", "private-compound", "spacious"],
-          "popularIn": ["All states"]
-        },
-        {
-          "subtype": "SEMI_DETACHED",
-          "name": "Semi-Detached House",
-          "slug": "semi-detached",
-          "description": "House sharing one wall with a neighbor",
-          "features": ["shared-wall", "two-units", "estate"],
-          "popularIn": ["Lagos", "Abuja", "Port Harcourt"]
-        },
-        {
-          "subtype": "STUDIO",
-          "name": "Studio/Self-Con",
-          "slug": "studio",
-          "description": "Single room with bathroom and kitchenette",
-          "features": ["compact", "single-occupant", "affordable"],
-          "popularIn": ["Lagos", "Abuja", "University areas"]
-        },
-        {
-          "subtype": "PENTHOUSE",
-          "name": "Penthouse",
-          "slug": "penthouse",
-          "description": "Luxury apartment on top floor with premium features",
-          "features": ["top-floor", "luxury", "panoramic-views"],
-          "popularIn": ["Lagos Island", "Victoria Island", "Ikoyi"]
-        }
-      ]
-    },
-    {
-      "type": "COMMERCIAL",
-      "name": "Commercial Property",
-      "slug": "commercial",
-      "description": "Properties designed for business use",
-      "icon": "building",
-      "subtypes": [
-        {
-          "subtype": "OFFICE_SPACE",
-          "name": "Office Space",
-          "slug": "office-space",
-          "description": "Space for business operations",
-          "features": ["workspaces", "meeting-rooms", "reception"],
-          "popularIn": ["Lagos", "Abuja", "Port Harcourt", "Kano"]
-        },
-        {
-          "subtype": "SHOP",
-          "name": "Shop/Retail Space",
-          "slug": "shop",
-          "description": "Space for retail or trading business",
-          "features": ["storefront", "display-area", "storage"],
-          "popularIn": ["All states"]
-        },
-        {
-          "subtype": "WAREHOUSE",
-          "name": "Warehouse",
-          "slug": "warehouse",
-          "description": "Large storage facility",
-          "features": ["high-ceiling", "loading-bay", "industrial"],
-          "popularIn": ["Lagos", "Ogun", "Kano", "Port Harcourt"]
-        },
-        {
-          "subtype": "FACTORY",
-          "name": "Factory/Industrial Building",
-          "slug": "factory",
-          "description": "Manufacturing or industrial facility",
-          "features": ["production-floor", "utilities", "industrial-zone"],
-          "popularIn": ["Lagos", "Ogun", "Kano", "Kaduna"]
-        }
-      ]
-    },
-    {
-      "type": "LAND",
-      "name": "Land",
-      "slug": "land",
-      "description": "Undeveloped or development-ready land",
-      "icon": "terrain",
-      "subtypes": [
-        {
-          "subtype": "LAND_PLOT",
-          "name": "Residential Plot",
-          "slug": "residential-plot",
-          "description": "Land zoned for residential development",
-          "features": ["residential-zone", "development-ready"],
-          "popularIn": ["All states"]
-        },
-        {
-          "subtype": "COMMERCIAL_LAND",
-          "name": "Commercial Plot",
-          "slug": "commercial-plot",
-          "description": "Land zoned for commercial development",
-          "features": ["commercial-zone", "high-traffic"],
-          "popularIn": ["Lagos", "Abuja", "Port Harcourt", "Kano"]
-        },
-        {
-          "subtype": "FARM_LAND",
-          "name": "Farm Land",
-          "slug": "farm-land",
-          "description": "Agricultural land for farming",
-          "features": ["agricultural", "rural", "large-acreage"],
-          "popularIn": ["Benue", "Plateau", "Niger", "Kaduna", "Oyo"]
-        },
-        {
-          "subtype": "MIXED_USE_LAND",
-          "name": "Mixed-Use Land",
-          "slug": "mixed-use-land",
-          "description": "Land approved for multiple uses",
-          "features": ["flexible-zoning", "urban-development"],
-          "popularIn": ["Lagos", "Abuja"]
-        }
-      ]
-    },
-    {
-      "type": "INDUSTRIAL",
-      "name": "Industrial Property",
-      "slug": "industrial",
-      "description": "Heavy industrial and manufacturing properties",
-      "icon": "factory",
-      "subtypes": [
-        {
-          "subtype": "INDUSTRIAL_COMPLEX",
-          "name": "Industrial Complex",
-          "slug": "industrial-complex",
-          "description": "Large-scale industrial facility",
-          "features": ["multiple-buildings", "industrial-zone", "utilities"],
-          "popularIn": ["Lagos", "Ogun", "Kano", "Rivers"]
-        },
-        {
-          "subtype": "TANK_FARM",
-          "name": "Tank Farm",
-          "slug": "tank-farm",
-          "description": "Storage facility for petroleum products",
-          "features": ["oil-gas", "storage-tanks", "specialized"],
-          "popularIn": ["Lagos", "Rivers", "Delta"]
-        }
-      ]
-    }
-  ],
-  "furnishingOptions": [
-    {
-      "status": "FURNISHED",
-      "name": "Fully Furnished",
-      "description": "Complete with furniture, appliances, and fixtures"
-    },
-    {
-      "status": "SEMI_FURNISHED",
-      "name": "Semi-Furnished",
-      "description": "Basic furniture and some appliances included"
-    },
-    {
-      "status": "UNFURNISHED",
-      "name": "Unfurnished",
-      "description": "Empty, no furniture or appliances"
-    }
-  ],
-  "commonFeatures": {
-    "interior": [
-      "Air Conditioning",
-      "Ceiling Fan",
-      "Fitted Kitchen",
-      "Wardrobe",
-      "Tiled Floors",
-      "POP Ceiling",
-      "Marble Floors",
-      "Walk-in Closet",
-      "Ensuite Rooms"
-    ],
-    "exterior": [
-      "Parking Space",
-      "Garden",
-      "Boys Quarters (BQ)",
-      "Gate House",
-      "Compound",
-      "Paved Driveway",
-      "Fence",
-      "Balcony",
-      "Terrace"
-    ],
-    "utilities": [
-      "24/7 Power Supply",
-      "Borehole",
-      "Water Treatment",
-      "Inverter/Solar",
-      "Generator",
-      "Prepaid Meter",
-      "Sewage System",
-      "Gas Pipeline"
-    ],
-    "security": [
-      "CCTV Cameras",
-      "Security Guard",
-      "Perimeter Fence",
-      "Electric Fence",
-      "Intercom",
-      "Gated Estate",
-      "Burglar Proof",
-      "Security Door"
-    ],
-    "community": [
-      "Swimming Pool",
-      "Gym",
-      "Playground",
-      "Tennis Court",
-      "Club House",
-      "Shopping Mall",
-      "School Nearby",
-      "Hospital Nearby"
+  "residential": {
+    "name": "Residential",
+    "slug": "residential",
+    "description": "Properties for living and accommodation",
+    "subtypes": [
+      {
+        "name": "Apartment/Flat",
+        "slug": "apartment",
+        "description": "Self-contained units within a larger building",
+        "features": ["bedrooms", "bathrooms", "toilets", "size"]
+      },
+      {
+        "name": "Bungalow",
+        "slug": "bungalow",
+        "description": "Single-story detached house",
+        "features": ["bedrooms", "bathrooms", "toilets", "size", "landSize"]
+      },
+      {
+        "name": "Duplex",
+        "slug": "duplex",
+        "description": "Two-story residential building",
+        "features": ["bedrooms", "bathrooms", "toilets", "size", "landSize", "floors"]
+      },
+      {
+        "name": "Terrace House",
+        "slug": "terrace",
+        "description": "Row house sharing walls with neighbors",
+        "features": ["bedrooms", "bathrooms", "toilets", "size", "floors"]
+      },
+      {
+        "name": "Detached House",
+        "slug": "detached-house",
+        "description": "Standalone residential building",
+        "features": ["bedrooms", "bathrooms", "toilets", "size", "landSize", "floors"]
+      },
+      {
+        "name": "Semi-Detached House",
+        "slug": "semi-detached",
+        "description": "House sharing one wall with neighbor",
+        "features": ["bedrooms", "bathrooms", "toilets", "size", "landSize", "floors"]
+      },
+      {
+        "name": "Studio Apartment",
+        "slug": "studio",
+        "description": "Single room with combined living and sleeping area",
+        "features": ["bathrooms", "toilets", "size"]
+      },
+      {
+        "name": "Penthouse",
+        "slug": "penthouse",
+        "description": "Luxury apartment on the top floor",
+        "features": ["bedrooms", "bathrooms", "toilets", "size"]
+      },
+      {
+        "name": "Mini Flat",
+        "slug": "mini-flat",
+        "description": "One bedroom apartment",
+        "features": ["bathrooms", "toilets", "size"]
+      },
+      {
+        "name": "Self-Contain",
+        "slug": "self-contain",
+        "description": "Single room with private bathroom and kitchen",
+        "features": ["bathrooms", "size"]
+      },
+      {
+        "name": "Mansion",
+        "slug": "mansion",
+        "description": "Large luxury residential property",
+        "features": ["bedrooms", "bathrooms", "toilets", "size", "landSize", "floors"]
+      }
     ]
   },
-  "listingTypes": [
+  "commercial": {
+    "name": "Commercial",
+    "slug": "commercial",
+    "description": "Properties for business and commercial use",
+    "subtypes": [
+      {
+        "name": "Office Space",
+        "slug": "office-space",
+        "description": "Space for office and administrative work",
+        "features": ["size", "floors"]
+      },
+      {
+        "name": "Shop",
+        "slug": "shop",
+        "description": "Retail space for selling goods",
+        "features": ["size"]
+      },
+      {
+        "name": "Warehouse",
+        "slug": "warehouse",
+        "description": "Storage and distribution facility",
+        "features": ["size", "landSize"]
+      },
+      {
+        "name": "Plaza/Complex",
+        "slug": "plaza",
+        "description": "Multi-unit commercial building",
+        "features": ["size", "landSize", "floors"]
+      },
+      {
+        "name": "Shopping Mall",
+        "slug": "shopping-mall",
+        "description": "Large retail complex",
+        "features": ["size", "landSize", "floors"]
+      },
+      {
+        "name": "Hotel/Guest House",
+        "slug": "hotel",
+        "description": "Hospitality property",
+        "features": ["bedrooms", "bathrooms", "size", "landSize", "floors"]
+      },
+      {
+        "name": "Restaurant Space",
+        "slug": "restaurant",
+        "description": "Space for food service business",
+        "features": ["size"]
+      },
+      {
+        "name": "Event Center",
+        "slug": "event-center",
+        "description": "Venue for events and gatherings",
+        "features": ["size", "landSize"]
+      },
+      {
+        "name": "Showroom",
+        "slug": "showroom",
+        "description": "Display and sales space",
+        "features": ["size"]
+      }
+    ]
+  },
+  "land": {
+    "name": "Land",
+    "slug": "land",
+    "description": "Undeveloped or partially developed land",
+    "subtypes": [
+      {
+        "name": "Residential Land",
+        "slug": "residential-land",
+        "description": "Land zoned for residential development",
+        "features": ["landSize"]
+      },
+      {
+        "name": "Commercial Land",
+        "slug": "commercial-land",
+        "description": "Land zoned for commercial development",
+        "features": ["landSize"]
+      },
+      {
+        "name": "Industrial Land",
+        "slug": "industrial-land",
+        "description": "Land zoned for industrial use",
+        "features": ["landSize"]
+      },
+      {
+        "name": "Mixed-Use Land",
+        "slug": "mixed-use-land",
+        "description": "Land for multiple purposes",
+        "features": ["landSize"]
+      },
+      {
+        "name": "Agricultural Land",
+        "slug": "agricultural-land",
+        "description": "Farmland for agricultural use",
+        "features": ["landSize"]
+      }
+    ]
+  },
+  "industrial": {
+    "name": "Industrial",
+    "slug": "industrial",
+    "description": "Properties for manufacturing and industrial use",
+    "subtypes": [
+      {
+        "name": "Factory",
+        "slug": "factory",
+        "description": "Manufacturing facility",
+        "features": ["size", "landSize"]
+      },
+      {
+        "name": "Workshop",
+        "slug": "workshop",
+        "description": "Small-scale production space",
+        "features": ["size"]
+      },
+      {
+        "name": "Tank Farm",
+        "slug": "tank-farm",
+        "description": "Petroleum storage facility",
+        "features": ["size", "landSize"]
+      },
+      {
+        "name": "Processing Plant",
+        "slug": "processing-plant",
+        "description": "Industrial processing facility",
+        "features": ["size", "landSize"]
+      }
+    ]
+  },
+  "features": {
+    "interior": [
+      "Air Conditioning",
+      "Ceiling Fans",
+      "Fitted Kitchen",
+      "Walk-in Closet",
+      "Ensuite Bedrooms",
+      "POP Ceiling",
+      "Tiled Floors",
+      "Marble Floors",
+      "Wooden Floors",
+      "Built-in Wardrobes",
+      "Hot/Cold Water",
+      "Bathtub",
+      "Shower Cubicle",
+      "Smart Home Features",
+      "Intercom"
+    ],
+    "exterior": [
+      "Balcony",
+      "Parking Space",
+      "Car Port",
+      "Garden",
+      "Lawn",
+      "Swimming Pool",
+      "Boys Quarters (BQ)",
+      "Security Post",
+      "Gate House",
+      "Paved Compound",
+      "Terrace",
+      "Rooftop Access",
+      "Private Driveway"
+    ],
+    "utilities": [
+      "24-Hour Electricity",
+      "Prepaid Meter",
+      "Generator",
+      "Inverter/Solar",
+      "Borehole Water",
+      "Municipal Water",
+      "Water Treatment",
+      "Overhead Tank",
+      "Underground Tank",
+      "DSTV/GOTV Ready",
+      "Internet Ready"
+    ],
+    "security": [
+      "CCTV Surveillance",
+      "Security Guards",
+      "Perimeter Fencing",
+      "Electric Fence",
+      "Burglar Proof",
+      "Security Doors",
+      "Fire Alarm",
+      "Smoke Detectors",
+      "Access Control",
+      "Automated Gate"
+    ],
+    "community": [
+      "Estate Living",
+      "Gated Community",
+      "Clubhouse",
+      "Gym/Fitness Center",
+      "Children's Play Area",
+      "Tennis Court",
+      "24/7 Security",
+      "Street Lights",
+      "Good Road Network",
+      "Drainage System",
+      "Waste Management"
+    ]
+  },
+  "furnishing": [
     {
-      "type": "FOR_SALE",
-      "name": "For Sale",
-      "description": "Property available for outright purchase"
+      "value": "FURNISHED",
+      "label": "Fully Furnished",
+      "description": "Comes with all furniture and appliances"
     },
     {
-      "type": "FOR_RENT",
-      "name": "For Rent",
-      "description": "Property available for rental (usually annual)"
+      "value": "SEMI_FURNISHED",
+      "label": "Semi-Furnished",
+      "description": "Comes with some furniture and appliances"
     },
     {
-      "type": "FOR_LEASE",
-      "name": "For Lease",
-      "description": "Property available on long-term lease"
-    },
-    {
-      "type": "FOR_SALE_AND_RENT",
-      "name": "For Sale or Rent",
-      "description": "Property available for either sale or rent"
-    },
-    {
-      "type": "FOR_SALE_AND_LEASE",
-      "name": "For Sale or Lease",
-      "description": "Property available for either sale or lease"
+      "value": "UNFURNISHED",
+      "label": "Unfurnished",
+      "description": "No furniture or appliances included"
     }
-  ],
-  "documentTypes": [
-    {
-      "type": "CERTIFICATE_OF_OCCUPANCY",
-      "name": "Certificate of Occupancy (C of O)",
-      "required": true,
-      "description": "Government-issued proof of land ownership"
-    },
-    {
-      "type": "DEED_OF_ASSIGNMENT",
-      "name": "Deed of Assignment",
-      "required": true,
-      "description": "Transfer of property rights document"
-    },
-    {
-      "type": "SURVEY_PLAN",
-      "name": "Survey Plan",
-      "required": true,
-      "description": "Official land survey document"
-    },
-    {
-      "type": "GOVERNORS_CONSENT",
-      "name": "Governor's Consent",
-      "required": false,
-      "description": "State approval for property transfer"
-    },
-    {
-      "type": "BUILDING_APPROVAL",
-      "name": "Building Plan Approval",
-      "required": false,
-      "description": "Approved construction plans"
-    },
-    {
-      "type": "RECEIPT_OF_PURCHASE",
-      "name": "Receipt/Evidence of Purchase",
-      "required": true,
-      "description": "Proof of payment for property"
-    },
-    {
-      "type": "EXCISION_DOCUMENT",
-      "name": "Excision Document",
-      "required": false,
-      "description": "Government release of land from acquisition"
-    },
-    {
-      "type": "GAZETTE",
-      "name": "Government Gazette",
-      "required": false,
-      "description": "Official government publication"
-    }
-  ],
-  "metadata": {
-    "version": "1.0.0",
-    "lastUpdated": "2024-12-01",
-    "totalTypes": 4,
-    "totalSubtypes": 18
-  }
+  ]
 }

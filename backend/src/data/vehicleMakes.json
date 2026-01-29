@@ -1,486 +1,366 @@
-{
-  "cars": [
-    {
-      "make": "Toyota",
-      "country": "Japan",
-      "popular": true,
-      "models": ["Camry", "Corolla", "RAV4", "Highlander", "Land Cruiser", "Prado", "Hilux", "Avalon", "Venza", "4Runner", "Sienna", "Tacoma", "Tundra", "Yaris", "C-HR", "Fortuner", "Sequoia"]
-    },
-    {
-      "make": "Honda",
-      "country": "Japan",
-      "popular": true,
-      "models": ["Accord", "Civic", "CR-V", "Pilot", "HR-V", "Odyssey", "Passport", "Ridgeline", "Fit", "Insight", "Element"]
-    },
-    {
-      "make": "Mercedes-Benz",
-      "country": "Germany",
-      "popular": true,
-      "models": ["C-Class", "E-Class", "S-Class", "GLE", "GLC", "GLA", "A-Class", "CLA", "GLB", "GLS", "G-Class", "AMG GT", "Maybach"]
-    },
-    {
-      "make": "BMW",
-      "country": "Germany",
-      "popular": true,
-      "models": ["3 Series", "5 Series", "7 Series", "X1", "X3", "X5", "X6", "X7", "4 Series", "8 Series", "M3", "M5", "Z4", "i4", "iX"]
-    },
-    {
-      "make": "Lexus",
-      "country": "Japan",
-      "popular": true,
-      "models": ["ES", "RX", "GX", "LX", "NX", "UX", "IS", "LS", "LC", "RC"]
-    },
-    {
-      "make": "Nissan",
-      "country": "Japan",
-      "popular": true,
-      "models": ["Altima", "Maxima", "Pathfinder", "Murano", "Rogue", "Sentra", "Versa", "Kicks", "Armada", "Frontier", "Titan", "Patrol"]
-    },
-    {
-      "make": "Ford",
-      "country": "USA",
-      "popular": true,
-      "models": ["F-150", "Explorer", "Escape", "Edge", "Ranger", "Mustang", "Bronco", "Expedition", "EcoSport", "Fusion"]
-    },
-    {
-      "make": "Hyundai",
-      "country": "South Korea",
-      "popular": true,
-      "models": ["Elantra", "Sonata", "Tucson", "Santa Fe", "Palisade", "Kona", "Venue", "Accent", "Creta", "i10", "i20"]
-    },
-    {
-      "make": "Kia",
-      "country": "South Korea",
-      "popular": true,
-      "models": ["Sportage", "Sorento", "Seltos", "Telluride", "Rio", "Forte", "K5", "Soul", "Carnival", "Stinger"]
-    },
-    {
-      "make": "Volkswagen",
-      "country": "Germany",
-      "popular": true,
-      "models": ["Passat", "Jetta", "Tiguan", "Atlas", "Golf", "Arteon", "ID.4", "Taos", "Touareg"]
-    },
-    {
-      "make": "Audi",
-      "country": "Germany",
-      "popular": false,
-      "models": ["A3", "A4", "A6", "A8", "Q3", "Q5", "Q7", "Q8", "e-tron", "RS6", "TT"]
-    },
-    {
-      "make": "Peugeot",
-      "country": "France",
-      "popular": true,
-      "models": ["206", "207", "208", "301", "308", "407", "508", "2008", "3008", "5008", "Partner"]
-    },
-    {
-      "make": "Mazda",
-      "country": "Japan",
-      "popular": false,
-      "models": ["Mazda3", "Mazda6", "CX-3", "CX-5", "CX-9", "CX-30", "MX-5"]
-    },
-    {
-      "make": "Chevrolet",
-      "country": "USA",
-      "popular": false,
-      "models": ["Malibu", "Camaro", "Equinox", "Traverse", "Suburban", "Tahoe", "Silverado", "Colorado", "Blazer", "Trax"]
-    },
-    {
-      "make": "Jeep",
-      "country": "USA",
-      "popular": false,
-      "models": ["Wrangler", "Grand Cherokee", "Cherokee", "Compass", "Renegade", "Gladiator"]
-    },
-    {
-      "make": "Land Rover",
-      "country": "UK",
-      "popular": false,
-      "models": ["Range Rover", "Range Rover Sport", "Range Rover Velar", "Range Rover Evoque", "Discovery", "Defender"]
-    },
-    {
-      "make": "Porsche",
-      "country": "Germany",
-      "popular": false,
-      "models": ["911", "Cayenne", "Macan", "Panamera", "Taycan", "718 Cayman", "718 Boxster"]
-    },
-    {
-      "make": "Volvo",
-      "country": "Sweden",
-      "popular": false,
-      "models": ["S60", "S90", "V60", "V90", "XC40", "XC60", "XC90"]
-    },
-    {
-      "make": "Mitsubishi",
-      "country": "Japan",
-      "popular": false,
-      "models": ["Outlander", "Eclipse Cross", "Pajero", "L200", "ASX", "Montero"]
-    },
-    {
-      "make": "Subaru",
-      "country": "Japan",
-      "popular": false,
-      "models": ["Outback", "Forester", "Crosstrek", "Impreza", "Legacy", "Ascent", "WRX"]
-    },
-    {
-      "make": "Suzuki",
-      "country": "Japan",
-      "popular": false,
-      "models": ["Swift", "Vitara", "Jimny", "Alto", "Baleno", "Ertiga", "XL7"]
-    },
-    {
-      "make": "Infiniti",
-      "country": "Japan",
-      "popular": false,
-      "models": ["Q50", "Q60", "QX50", "QX60", "QX80"]
-    },
-    {
-      "make": "Acura",
-      "country": "Japan",
-      "popular": false,
-      "models": ["TLX", "ILX", "RDX", "MDX", "NSX"]
-    },
-    {
-      "make": "Jaguar",
-      "country": "UK",
-      "popular": false,
-      "models": ["XE", "XF", "F-Pace", "E-Pace", "I-Pace", "F-Type"]
-    },
-    {
-      "make": "Bentley",
-      "country": "UK",
-      "popular": false,
-      "models": ["Continental GT", "Flying Spur", "Bentayga"]
-    },
-    {
-      "make": "Rolls-Royce",
-      "country": "UK",
-      "popular": false,
-      "models": ["Phantom", "Ghost", "Cullinan", "Wraith", "Dawn"]
-    },
-    {
-      "make": "Ferrari",
-      "country": "Italy",
-      "popular": false,
-      "models": ["F8 Tributo", "SF90 Stradale", "Roma", "Portofino", "812 Superfast"]
-    },
-    {
-      "make": "Lamborghini",
-      "country": "Italy",
-      "popular": false,
-      "models": ["Huracán", "Aventador", "Urus"]
-    },
-    {
-      "make": "Maserati",
-      "country": "Italy",
-      "popular": false,
-      "models": ["Ghibli", "Quattroporte", "Levante", "MC20"]
-    },
-    {
-      "make": "Tesla",
-      "country": "USA",
-      "popular": false,
-      "models": ["Model 3", "Model Y", "Model S", "Model X", "Cybertruck"]
-    },
-    {
-      "make": "Innoson",
-      "country": "Nigeria",
-      "popular": true,
-      "models": ["IVM Caris", "IVM G5", "IVM G6", "IVM G12", "IVM G20", "IVM G40", "IVM G80", "IVM Fox", "IVM Carrier"]
-    },
-    {
-      "make": "GAC",
-      "country": "China",
-      "popular": false,
-      "models": ["GS3", "GS4", "GS8", "GM8", "Emkoo", "GN6", "GN8"]
-    },
-    {
-      "make": "Changan",
-      "country": "China",
-      "popular": false,
-      "models": ["CS35", "CS55", "CS75", "CS95", "UNI-T", "UNI-K"]
-    },
-    {
-      "make": "Geely",
-      "country": "China",
-      "popular": false,
-      "models": ["Coolray", "Azkarra", "Okavango", "Emgrand"]
-    },
-    {
-      "make": "BYD",
-      "country": "China",
-      "popular": false,
-      "models": ["Atto 3", "Han", "Tang", "Seal", "Dolphin", "e6"]
-    }
-  ],
-  "motorcycles": [
-    {
-      "make": "Bajaj",
-      "country": "India",
-      "popular": true,
-      "models": ["Boxer", "Platina", "CT100", "Pulsar", "Dominar", "Avenger"]
-    },
-    {
-      "make": "Honda",
-      "country": "Japan",
-      "popular": true,
-      "models": ["ACE", "CG", "CB", "XL", "Dio", "Activa", "PCX", "CBR"]
-    },
-    {
-      "make": "TVS",
-      "country": "India",
-      "popular": true,
-      "models": ["Apache", "King", "Star City", "XL100", "Jupiter", "Ntorq"]
-    },
-    {
-      "make": "Yamaha",
-      "country": "Japan",
-      "popular": true,
-      "models": ["YBR", "FZ", "R15", "MT-15", "NMAX", "Aerox"]
-    },
-    {
-      "make": "Suzuki",
-      "country": "Japan",
-      "popular": false,
-      "models": ["Gixxer", "Intruder", "Hayabusa", "GSX-R", "V-Strom", "Burgman"]
-    },
-    {
-      "make": "Kawasaki",
-      "country": "Japan",
-      "popular": false,
-      "models": ["Ninja", "Z Series", "Versys", "Vulcan", "KLR"]
-    },
-    {
-      "make": "Qlink",
-      "country": "Nigeria",
-      "popular": true,
-      "models": ["Ranger", "XP", "Sprint", "Stallion"]
-    },
-    {
-      "make": "Jincheng",
-      "country": "China",
-      "popular": true,
-      "models": ["JC100", "JC110", "JC125", "JC150"]
-    },
-    {
-      "make": "Haojue",
-      "country": "China",
-      "popular": true,
-      "models": ["HJ100", "HJ110", "HJ125", "HJ150"]
-    },
-    {
-      "make": "Sinoki",
-      "country": "China",
-      "popular": true,
-      "models": ["SK100", "SK110", "SK125", "SK150", "SK200"]
-    }
-  ],
-  "trucks": [
-    {
-      "make": "Mercedes-Benz",
-      "country": "Germany",
-      "popular": true,
-      "models": ["Actros", "Atego", "Axor", "Arocs", "Econic"]
-    },
-    {
-      "make": "MAN",
-      "country": "Germany",
-      "popular": true,
-      "models": ["TGS", "TGX", "TGM", "TGL"]
-    },
-    {
-      "make": "Volvo",
-      "country": "Sweden",
-      "popular": true,
-      "models": ["FH", "FM", "FMX", "FE", "FL"]
-    },
-    {
-      "make": "Scania",
-      "country": "Sweden",
-      "popular": true,
-      "models": ["R Series", "S Series", "G Series", "P Series"]
-    },
-    {
-      "make": "DAF",
-      "country": "Netherlands",
-      "popular": false,
-      "models": ["XF", "CF", "LF"]
-    },
-    {
-      "make": "Iveco",
-      "country": "Italy",
-      "popular": false,
-      "models": ["Stralis", "Trakker", "Eurocargo", "Daily"]
-    },
-    {
-      "make": "Howo",
-      "country": "China",
-      "popular": true,
-      "models": ["A7", "T7", "Max", "Dump Truck"]
-    },
-    {
-      "make": "Shacman",
-      "country": "China",
-      "popular": true,
-      "models": ["F3000", "X3000", "L3000", "H3000"]
-    },
-    {
-      "make": "Foton",
-      "country": "China",
-      "popular": true,
-      "models": ["Auman", "Aumark", "Ollin"]
-    },
-    {
-      "make": "Mack",
-      "country": "USA",
-      "popular": false,
-      "models": ["Anthem", "Granite", "Pinnacle", "TerraPro"]
-    },
-    {
-      "make": "International",
-      "country": "USA",
-      "popular": false,
-      "models": ["LT", "RH", "HX", "MV"]
-    }
-  ],
-  "buses": [
-    {
-      "make": "Toyota",
-      "country": "Japan",
-      "popular": true,
-      "models": ["Hiace", "Coaster"]
-    },
-    {
-      "make": "Mercedes-Benz",
-      "country": "Germany",
-      "popular": true,
-      "models": ["Sprinter", "Tourismo", "Travego", "Citaro"]
-    },
-    {
-      "make": "Volkswagen",
-      "country": "Germany",
-      "popular": false,
-      "models": ["Crafter", "Transporter", "Kombi"]
-    },
-    {
-      "make": "Ford",
-      "country": "USA",
-      "popular": true,
-      "models": ["Transit", "E-Series", "F-Series Bus"]
-    },
-    {
-      "make": "Hyundai",
-      "country": "South Korea",
-      "popular": true,
-      "models": ["H-1", "Solati", "County", "Universe"]
-    },
-    {
-      "make": "Iveco",
-      "country": "Italy",
-      "popular": false,
-      "models": ["Daily Minibus", "Crossway", "Magelys"]
-    },
-    {
-      "make": "Yutong",
-      "country": "China",
-      "popular": true,
-      "models": ["ZK6116", "ZK6122", "ZK6128", "ZK6809"]
-    },
-    {
-      "make": "Golden Dragon",
-      "country": "China",
-      "popular": true,
-      "models": ["XML6127", "XML6102", "XML6896"]
-    },
-    {
-      "make": "Higer",
-      "country": "China",
-      "popular": true,
-      "models": ["KLQ6129", "KLQ6122", "KLQ6119"]
-    },
-    {
-      "make": "King Long",
-      "country": "China",
-      "popular": true,
-      "models": ["XMQ6117", "XMQ6119", "XMQ6129"]
-    },
-    {
-      "make": "Innoson",
-      "country": "Nigeria",
-      "popular": true,
-      "models": ["IVM 5000", "IVM 6000", "IVM 7000"]
-    }
-  ],
-  "heavyEquipment": [
-    {
-      "make": "Caterpillar",
-      "country": "USA",
-      "popular": true,
-      "models": ["Excavators", "Bulldozers", "Wheel Loaders", "Motor Graders", "Backhoe Loaders", "Skid Steer Loaders"]
-    },
-    {
-      "make": "Komatsu",
-      "country": "Japan",
-      "popular": true,
-      "models": ["PC Series Excavators", "D Series Bulldozers", "WA Series Wheel Loaders", "GD Series Graders"]
-    },
-    {
-      "make": "Hitachi",
-      "country": "Japan",
-      "popular": true,
-      "models": ["ZX Series Excavators", "EX Series Excavators", "Wheel Loaders"]
-    },
-    {
-      "make": "Volvo",
-      "country": "Sweden",
-      "popular": true,
-      "models": ["EC Series Excavators", "L Series Wheel Loaders", "A Series Articulated Haulers"]
-    },
-    {
-      "make": "JCB",
-      "country": "UK",
-      "popular": true,
-      "models": ["3CX Backhoe", "JS Excavators", "Telehandlers", "Skid Steers"]
-    },
-    {
-      "make": "Liebherr",
-      "country": "Germany",
-      "popular": false,
-      "models": ["R Series Excavators", "L Series Wheel Loaders", "Mobile Cranes"]
-    },
-    {
-      "make": "John Deere",
-      "country": "USA",
-      "popular": true,
-      "models": ["Tractors", "Excavators", "Wheel Loaders", "Skid Steers", "Backhoes"]
-    },
-    {
-      "make": "XCMG",
-      "country": "China",
-      "popular": true,
-      "models": ["Excavators", "Wheel Loaders", "Cranes", "Motor Graders", "Rollers"]
-    },
-    {
-      "make": "SANY",
-      "country": "China",
-      "popular": true,
-      "models": ["Excavators", "Cranes", "Concrete Machinery", "Piling Machinery"]
-    },
-    {
-      "make": "SDLG",
-      "country": "China",
-      "popular": true,
-      "models": ["Wheel Loaders", "Excavators", "Motor Graders", "Backhoe Loaders"]
-    },
-    {
-      "make": "Terex",
-      "country": "USA",
-      "popular": false,
-      "models": ["Cranes", "Aerial Work Platforms", "Material Processing Equipment"]
-    },
-    {
-      "make": "Doosan",
-      "country": "South Korea",
-      "popular": false,
-      "models": ["DX Series Excavators", "DL Series Wheel Loaders", "DA Series Articulated Trucks"]
-    }
-  ]
-}
+[
+  {
+    "name": "Toyota",
+    "slug": "toyota",
+    "country": "Japan",
+    "isPopular": true,
+    "models": [
+      "Camry", "Corolla", "RAV4", "Highlander", "Land Cruiser", "Prado", 
+      "Hilux", "Sienna", "Avalon", "Venza", "4Runner", "Tacoma",
+      "Tundra", "Sequoia", "Yaris", "Matrix", "Fortuner", "Rush"
+    ]
+  },
+  {
+    "name": "Honda",
+    "slug": "honda",
+    "country": "Japan",
+    "isPopular": true,
+    "models": [
+      "Accord", "Civic", "CR-V", "Pilot", "HR-V", "Odyssey",
+      "Fit", "City", "Crosstour", "Element", "Ridgeline", "Passport"
+    ]
+  },
+  {
+    "name": "Mercedes-Benz",
+    "slug": "mercedes-benz",
+    "country": "Germany",
+    "isPopular": true,
+    "models": [
+      "C-Class", "E-Class", "S-Class", "GLE", "GLC", "GLA",
+      "A-Class", "CLA", "G-Wagon", "ML", "GLK", "GL", "AMG GT",
+      "Maybach", "Sprinter", "Vito"
+    ]
+  },
+  {
+    "name": "BMW",
+    "slug": "bmw",
+    "country": "Germany",
+    "isPopular": true,
+    "models": [
+      "3 Series", "5 Series", "7 Series", "X1", "X3", "X5", "X6", "X7",
+      "1 Series", "4 Series", "6 Series", "M3", "M5", "i8"
+    ]
+  },
+  {
+    "name": "Lexus",
+    "slug": "lexus",
+    "country": "Japan",
+    "isPopular": true,
+    "models": [
+      "RX", "ES", "GX", "LX", "NX", "IS", "LS", "GS",
+      "UX", "LC", "RC"
+    ]
+  },
+  {
+    "name": "Ford",
+    "slug": "ford",
+    "country": "USA",
+    "isPopular": true,
+    "models": [
+      "F-150", "Explorer", "Escape", "Edge", "Ranger", "Expedition",
+      "Focus", "Fusion", "Mustang", "Transit", "EcoSport", "Bronco"
+    ]
+  },
+  {
+    "name": "Hyundai",
+    "slug": "hyundai",
+    "country": "South Korea",
+    "isPopular": true,
+    "models": [
+      "Elantra", "Sonata", "Tucson", "Santa Fe", "Accent", "i10",
+      "i20", "Creta", "Palisade", "Kona", "Venue", "Genesis"
+    ]
+  },
+  {
+    "name": "Kia",
+    "slug": "kia",
+    "country": "South Korea",
+    "isPopular": true,
+    "models": [
+      "Sorento", "Sportage", "Optima", "Rio", "Cerato", "Picanto",
+      "Seltos", "Soul", "Telluride", "Carnival", "Stinger"
+    ]
+  },
+  {
+    "name": "Nissan",
+    "slug": "nissan",
+    "country": "Japan",
+    "isPopular": true,
+    "models": [
+      "Altima", "Maxima", "Pathfinder", "Murano", "Rogue", "Sentra",
+      "Xterra", "Armada", "Frontier", "Patrol", "Qashqai", "Juke",
+      "Kicks", "Versa", "Titan"
+    ]
+  },
+  {
+    "name": "Volkswagen",
+    "slug": "volkswagen",
+    "country": "Germany",
+    "isPopular": true,
+    "models": [
+      "Golf", "Passat", "Jetta", "Tiguan", "Touareg", "Polo",
+      "Atlas", "Arteon", "T-Roc", "ID.4", "Beetle"
+    ]
+  },
+  {
+    "name": "Audi",
+    "slug": "audi",
+    "country": "Germany",
+    "isPopular": true,
+    "models": [
+      "A3", "A4", "A5", "A6", "A7", "A8", "Q3", "Q5", "Q7", "Q8",
+      "TT", "R8", "e-tron", "RS6", "S4"
+    ]
+  },
+  {
+    "name": "Peugeot",
+    "slug": "peugeot",
+    "country": "France",
+    "isPopular": true,
+    "models": [
+      "206", "207", "208", "301", "308", "407", "408", "508",
+      "2008", "3008", "5008", "Partner", "Expert"
+    ]
+  },
+  {
+    "name": "Chevrolet",
+    "slug": "chevrolet",
+    "country": "USA",
+    "isPopular": true,
+    "models": [
+      "Malibu", "Cruze", "Equinox", "Traverse", "Tahoe", "Suburban",
+      "Silverado", "Colorado", "Camaro", "Corvette", "Spark", "Trax"
+    ]
+  },
+  {
+    "name": "Mazda",
+    "slug": "mazda",
+    "country": "Japan",
+    "isPopular": true,
+    "models": [
+      "CX-5", "CX-3", "CX-9", "Mazda3", "Mazda6", "CX-30",
+      "MX-5", "BT-50"
+    ]
+  },
+  {
+    "name": "Mitsubishi",
+    "slug": "mitsubishi",
+    "country": "Japan",
+    "isPopular": true,
+    "models": [
+      "Outlander", "Pajero", "L200", "ASX", "Eclipse Cross",
+      "Lancer", "Montero", "Canter"
+    ]
+  },
+  {
+    "name": "Suzuki",
+    "slug": "suzuki",
+    "country": "Japan",
+    "isPopular": true,
+    "models": [
+      "Swift", "Vitara", "Jimny", "Celerio", "Dzire", "Baleno",
+      "SX4", "Alto", "Ciaz", "Ertiga"
+    ]
+  },
+  {
+    "name": "Land Rover",
+    "slug": "land-rover",
+    "country": "UK",
+    "isPopular": true,
+    "models": [
+      "Range Rover", "Range Rover Sport", "Range Rover Evoque",
+      "Discovery", "Discovery Sport", "Defender", "Freelander", "Velar"
+    ]
+  },
+  {
+    "name": "Jeep",
+    "slug": "jeep",
+    "country": "USA",
+    "isPopular": true,
+    "models": [
+      "Wrangler", "Grand Cherokee", "Cherokee", "Compass",
+      "Renegade", "Gladiator", "Liberty", "Commander"
+    ]
+  },
+  {
+    "name": "Porsche",
+    "slug": "porsche",
+    "country": "Germany",
+    "isPopular": false,
+    "models": [
+      "Cayenne", "Macan", "Panamera", "911", "Taycan", "Boxster", "Cayman"
+    ]
+  },
+  {
+    "name": "Acura",
+    "slug": "acura",
+    "country": "Japan",
+    "isPopular": false,
+    "models": [
+      "MDX", "RDX", "TLX", "ILX", "NSX", "ZDX", "TSX"
+    ]
+  },
+  {
+    "name": "Infiniti",
+    "slug": "infiniti",
+    "country": "Japan",
+    "isPopular": false,
+    "models": [
+      "QX60", "QX80", "Q50", "Q60", "QX50", "FX35", "G37", "JX35"
+    ]
+  },
+  {
+    "name": "Volvo",
+    "slug": "volvo",
+    "country": "Sweden",
+    "isPopular": false,
+    "models": [
+      "XC90", "XC60", "XC40", "S60", "S90", "V60", "V90"
+    ]
+  },
+  {
+    "name": "Subaru",
+    "slug": "subaru",
+    "country": "Japan",
+    "isPopular": false,
+    "models": [
+      "Outback", "Forester", "Crosstrek", "Impreza", "Legacy", "WRX", "BRZ"
+    ]
+  },
+  {
+    "name": "Cadillac",
+    "slug": "cadillac",
+    "country": "USA",
+    "isPopular": false,
+    "models": [
+      "Escalade", "CT5", "CT6", "XT5", "XT6", "CTS", "SRX", "ATS"
+    ]
+  },
+  {
+    "name": "GMC",
+    "slug": "gmc",
+    "country": "USA",
+    "isPopular": false,
+    "models": [
+      "Sierra", "Yukon", "Acadia", "Terrain", "Canyon", "Savana"
+    ]
+  },
+  {
+    "name": "Dodge",
+    "slug": "dodge",
+    "country": "USA",
+    "isPopular": false,
+    "models": [
+      "Durango", "Charger", "Challenger", "Ram", "Journey", "Grand Caravan"
+    ]
+  },
+  {
+    "name": "Jaguar",
+    "slug": "jaguar",
+    "country": "UK",
+    "isPopular": false,
+    "models": [
+      "F-Pace", "E-Pace", "XF", "XE", "XJ", "F-Type", "I-Pace"
+    ]
+  },
+  {
+    "name": "Bentley",
+    "slug": "bentley",
+    "country": "UK",
+    "isPopular": false,
+    "models": [
+      "Bentayga", "Continental GT", "Flying Spur", "Mulsanne"
+    ]
+  },
+  {
+    "name": "Rolls-Royce",
+    "slug": "rolls-royce",
+    "country": "UK",
+    "isPopular": false,
+    "models": [
+      "Phantom", "Ghost", "Cullinan", "Wraith", "Dawn"
+    ]
+  },
+  {
+    "name": "Tesla",
+    "slug": "tesla",
+    "country": "USA",
+    "isPopular": false,
+    "models": [
+      "Model S", "Model 3", "Model X", "Model Y", "Cybertruck"
+    ]
+  },
+  {
+    "name": "Isuzu",
+    "slug": "isuzu",
+    "country": "Japan",
+    "isPopular": true,
+    "models": [
+      "D-Max", "MU-X", "NQR", "NPR", "FVR", "FTR"
+    ]
+  },
+  {
+    "name": "MAN",
+    "slug": "man",
+    "country": "Germany",
+    "isPopular": false,
+    "models": [
+      "TGS", "TGX", "TGL", "TGM"
+    ]
+  },
+  {
+    "name": "Hino",
+    "slug": "hino",
+    "country": "Japan",
+    "isPopular": false,
+    "models": [
+      "300 Series", "500 Series", "700 Series"
+    ]
+  },
+  {
+    "name": "Iveco",
+    "slug": "iveco",
+    "country": "Italy",
+    "isPopular": false,
+    "models": [
+      "Daily", "Eurocargo", "Stralis", "Trakker"
+    ]
+  },
+  {
+    "name": "JAC",
+    "slug": "jac",
+    "country": "China",
+    "isPopular": false,
+    "models": [
+      "S2", "S3", "S5", "T6", "T8", "Sunray"
+    ]
+  },
+  {
+    "name": "Changan",
+    "slug": "changan",
+    "country": "China",
+    "isPopular": false,
+    "models": [
+      "CS35", "CS55", "CS75", "Eado", "UNI-T"
+    ]
+  },
+  {
+    "name": "Geely",
+    "slug": "geely",
+    "country": "China",
+    "isPopular": false,
+    "models": [
+      "Coolray", "Azkarra", "Okavango", "Emgrand"
+    ]
+  },
+  {
+    "name": "Innoson",
+    "slug": "innoson",
+    "country": "Nigeria",
+    "isPopular": true,
+    "models": [
+      "IVM Caris", "IVM G5", "IVM G6", "IVM G12", "IVM G20", "IVM G40", 
+      "IVM G80", "IVM Fox", "IVM Carrier"
+    ]
+  }
+]

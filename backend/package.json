@@ -4,6 +4,10 @@
   "description": "Workkin Platform - Backend API with Express, GraphQL, and PostgreSQL",
   "main": "dist/index.js",
   "type": "module",
+  "prisma": {
+    "schema": "prisma/schema.prisma",
+    "seed": "tsx prisma/seed.ts"
+  },
   "scripts": {
     "dev": "nodemon",
     "dev:debug": "NODE_OPTIONS='--inspect' nodemon",

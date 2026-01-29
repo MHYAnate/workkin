@@ -1,92 +1,167 @@
 [
   {
-    "id": "cat-mechanics-auto-repair",
+    "id": "cat_mechanics_auto",
     "name": "Mechanics & Auto Repair",
     "slug": "mechanics-auto-repair",
-    "description": "Vehicle repair, maintenance, and mechanical services for cars, motorcycles, and commercial vehicles",
+    "description": "Vehicle repair, maintenance, and auto body services",
     "icon": "wrench",
     "image": "/images/categories/mechanics.jpg",
     "order": 1,
-    "isActive": true
+    "isActive": true,
+    "parentId": null
   },
   {
-    "id": "cat-vehicle-sales",
+    "id": "cat_vehicle_sales",
     "name": "Vehicle Sales",
     "slug": "vehicle-sales",
-    "description": "Authorized dealers and individual sellers for new and used vehicles",
+    "description": "Vehicle dealerships and individual vehicle sellers",
     "icon": "car",
     "image": "/images/categories/vehicle-sales.jpg",
     "order": 2,
-    "isActive": true
+    "isActive": true,
+    "parentId": null
   },
   {
-    "id": "cat-transportation-services",
+    "id": "cat_transportation",
     "name": "Transportation Services",
     "slug": "transportation-services",
-    "description": "Logistics, delivery, rental, and transportation solutions",
+    "description": "Driving, delivery, logistics, and transportation services",
     "icon": "truck",
     "image": "/images/categories/transportation.jpg",
     "order": 3,
-    "isActive": true
+    "isActive": true,
+    "parentId": null
   },
   {
-    "id": "cat-construction-building",
+    "id": "cat_construction",
     "name": "Construction & Building",
     "slug": "construction-building",
-    "description": "Construction, masonry, roofing, and building services",
+    "description": "Construction, masonry, and building services",
     "icon": "building",
     "image": "/images/categories/construction.jpg",
     "order": 4,
-    "isActive": true
+    "isActive": true,
+    "parentId": null
   },
   {
-    "id": "cat-home-maintenance",
+    "id": "cat_home_maintenance",
     "name": "Home Maintenance",
     "slug": "home-maintenance",
-    "description": "Home repair, cleaning, installation, and maintenance services",
+    "description": "Home repair, installation, and maintenance services",
     "icon": "home",
     "image": "/images/categories/home-maintenance.jpg",
     "order": 5,
-    "isActive": true
+    "isActive": true,
+    "parentId": null
   },
   {
-    "id": "cat-real-estate-services",
+    "id": "cat_real_estate",
     "name": "Real Estate Services",
     "slug": "real-estate-services",
-    "description": "Property agents, landlords, and property management services",
+    "description": "Property sales, rentals, and property management",
     "icon": "building-2",
     "image": "/images/categories/real-estate.jpg",
     "order": 6,
-    "isActive": true
+    "isActive": true,
+    "parentId": null
   },
   {
-    "id": "cat-personal-services",
+    "id": "cat_personal_services",
     "name": "Personal Services",
     "slug": "personal-services",
-    "description": "Beauty, grooming, care, and personal wellness services",
+    "description": "Beauty, wellness, fashion, and personal care services",
     "icon": "user",
-    "image": "/images/categories/personal.jpg",
+    "image": "/images/categories/personal-services.jpg",
     "order": 7,
-    "isActive": true
+    "isActive": true,
+    "parentId": null
   },
   {
-    "id": "cat-professional-services",
+    "id": "cat_professional",
     "name": "Professional Services",
     "slug": "professional-services",
-    "description": "Business, technology, events, and professional consulting services",
+    "description": "Business, legal, tech, and professional consulting services",
     "icon": "briefcase",
     "image": "/images/categories/professional.jpg",
     "order": 8,
-    "isActive": true
+    "isActive": true,
+    "parentId": null
   },
   {
-    "id": "cat-financial-services",
+    "id": "cat_events_catering",
+    "name": "Events & Catering",
+    "slug": "events-catering",
+    "description": "Event planning, catering, and entertainment services",
+    "icon": "party-popper",
+    "image": "/images/categories/events.jpg",
+    "order": 9,
+    "isActive": true,
+    "parentId": null
+  },
+  {
+    "id": "cat_education_training",
+    "name": "Education & Training",
+    "slug": "education-training",
+    "description": "Tutoring, lessons, vocational training, and educational services",
+    "icon": "graduation-cap",
+    "image": "/images/categories/education.jpg",
+    "order": 10,
+    "isActive": true,
+    "parentId": null
+  },
+  {
+    "id": "cat_healthcare",
+    "name": "Healthcare & Wellness",
+    "slug": "healthcare-wellness",
+    "description": "Medical, nursing, and wellness services",
+    "icon": "heart-pulse",
+    "image": "/images/categories/healthcare.jpg",
+    "order": 11,
+    "isActive": true,
+    "parentId": null
+  },
+  {
+    "id": "cat_agriculture",
+    "name": "Agriculture & Farming",
+    "slug": "agriculture-farming",
+    "description": "Farming, livestock, and agricultural services",
+    "icon": "tractor",
+    "image": "/images/categories/agriculture.jpg",
+    "order": 12,
+    "isActive": true,
+    "parentId": null
+  },
+  {
+    "id": "cat_pet_services",
+    "name": "Pet Services",
+    "slug": "pet-services",
+    "description": "Pet care, grooming, training, and veterinary services",
+    "icon": "paw-print",
+    "image": "/images/categories/pets.jpg",
+    "order": 13,
+    "isActive": true,
+    "parentId": null
+  },
+  {
+    "id": "cat_financial",
     "name": "Financial Services",
     "slug": "financial-services",
-    "description": "Insurance, financing, and financial product providers",
-    "icon": "banknote",
+    "description": "Insurance, financing, and financial service providers",
+    "icon": "landmark",
     "image": "/images/categories/financial.jpg",
-    "order": 9,
-    "isActive": true
+    "order": 14,
+    "isActive": true,
+    "parentId": null
+  },
+  {
+    "id": "cat_repairs_maintenance",
+    "name": "Repairs & Maintenance",
+    "slug": "repairs-maintenance",
+    "description": "General repair services for electronics, accessories, and more",
+    "icon": "settings",
+    "image": "/images/categories/repairs.jpg",
+    "order": 15,
+    "isActive": true,
+    "parentId": null
   }
 ]

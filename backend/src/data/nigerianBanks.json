@@ -1,404 +1,261 @@
-{
-  "banks": [
-    {
-      "name": "Access Bank",
-      "code": "044",
-      "slug": "access-bank",
-      "nipCode": "000014",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Citibank Nigeria",
-      "code": "023",
-      "slug": "citibank-nigeria",
-      "nipCode": "000009",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Diamond Bank",
-      "code": "063",
-      "slug": "diamond-bank",
-      "nipCode": "000005",
-      "type": "commercial",
-      "isActive": false,
-      "note": "Merged with Access Bank"
-    },
-    {
-      "name": "Ecobank Nigeria",
-      "code": "050",
-      "slug": "ecobank-nigeria",
-      "nipCode": "000010",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Fidelity Bank",
-      "code": "070",
-      "slug": "fidelity-bank",
-      "nipCode": "000007",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "First Bank of Nigeria",
-      "code": "011",
-      "slug": "first-bank",
-      "nipCode": "000016",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "First City Monument Bank",
-      "code": "214",
-      "slug": "fcmb",
-      "nipCode": "000003",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Guaranty Trust Bank",
-      "code": "058",
-      "slug": "gtbank",
-      "nipCode": "000013",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Heritage Bank",
-      "code": "030",
-      "slug": "heritage-bank",
-      "nipCode": "000020",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Keystone Bank",
-      "code": "082",
-      "slug": "keystone-bank",
-      "nipCode": "000002",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Polaris Bank",
-      "code": "076",
-      "slug": "polaris-bank",
-      "nipCode": "000008",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Providus Bank",
-      "code": "101",
-      "slug": "providus-bank",
-      "nipCode": "000023",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Stanbic IBTC Bank",
-      "code": "221",
-      "slug": "stanbic-ibtc",
-      "nipCode": "000012",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Standard Chartered Bank",
-      "code": "068",
-      "slug": "standard-chartered",
-      "nipCode": "000021",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Sterling Bank",
-      "code": "232",
-      "slug": "sterling-bank",
-      "nipCode": "000001",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Titan Trust Bank",
-      "code": "102",
-      "slug": "titan-trust-bank",
-      "nipCode": "000025",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Union Bank of Nigeria",
-      "code": "032",
-      "slug": "union-bank",
-      "nipCode": "000018",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "United Bank for Africa",
-      "code": "033",
-      "slug": "uba",
-      "nipCode": "000004",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Unity Bank",
-      "code": "215",
-      "slug": "unity-bank",
-      "nipCode": "000011",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Wema Bank",
-      "code": "035",
-      "slug": "wema-bank",
-      "nipCode": "000017",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Zenith Bank",
-      "code": "057",
-      "slug": "zenith-bank",
-      "nipCode": "000015",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Globus Bank",
-      "code": "103",
-      "slug": "globus-bank",
-      "nipCode": "000027",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "SunTrust Bank",
-      "code": "100",
-      "slug": "suntrust-bank",
-      "nipCode": "000022",
-      "type": "commercial",
-      "isActive": true
-    },
-    {
-      "name": "Jaiz Bank",
-      "code": "301",
-      "slug": "jaiz-bank",
-      "nipCode": "000006",
-      "type": "non-interest",
-      "isActive": true
-    },
-    {
-      "name": "TAJBank",
-      "code": "302",
-      "slug": "tajbank",
-      "nipCode": "000026",
-      "type": "non-interest",
-      "isActive": true
-    },
-    {
-      "name": "Lotus Bank",
-      "code": "303",
-      "slug": "lotus-bank",
-      "nipCode": "000029",
-      "type": "non-interest",
-      "isActive": true
-    },
-    {
-      "name": "Kuda Bank",
-      "code": "090267",
-      "slug": "kuda-bank",
-      "nipCode": "090267",
-      "type": "digital",
-      "isActive": true
-    },
-    {
-      "name": "OPay",
-      "code": "100004",
-      "slug": "opay",
-      "nipCode": "100004",
-      "type": "digital",
-      "isActive": true
-    },
-    {
-      "name": "PalmPay",
-      "code": "100033",
-      "slug": "palmpay",
-      "nipCode": "100033",
-      "type": "digital",
-      "isActive": true
-    },
-    {
-      "name": "Moniepoint",
-      "code": "100022",
-      "slug": "moniepoint",
-      "nipCode": "100022",
-      "type": "digital",
-      "isActive": true
-    },
-    {
-      "name": "Carbon",
-      "code": "100026",
-      "slug": "carbon",
-      "nipCode": "100026",
-      "type": "digital",
-      "isActive": true
-    },
-    {
-      "name": "VFD Microfinance Bank",
-      "code": "090110",
-      "slug": "vfd-mfb",
-      "nipCode": "090110",
-      "type": "microfinance",
-      "isActive": true
-    },
-    {
-      "name": "ALAT by Wema",
-      "code": "035A",
-      "slug": "alat-by-wema",
-      "nipCode": "035",
-      "type": "digital",
-      "isActive": true,
-      "parentBank": "wema-bank"
-    },
-    {
-      "name": "Rubies Microfinance Bank",
-      "code": "090175",
-      "slug": "rubies-mfb",
-      "nipCode": "090175",
-      "type": "microfinance",
-      "isActive": true
-    },
-    {
-      "name": "Sparkle Microfinance Bank",
-      "code": "090325",
-      "slug": "sparkle-mfb",
-      "nipCode": "090325",
-      "type": "microfinance",
-      "isActive": true
-    },
-    {
-      "name": "Eyowo",
-      "code": "090328",
-      "slug": "eyowo",
-      "nipCode": "090328",
-      "type": "digital",
-      "isActive": true
-    },
-    {
-      "name": "FairMoney Microfinance Bank",
-      "code": "090551",
-      "slug": "fairmoney-mfb",
-      "nipCode": "090551",
-      "type": "microfinance",
-      "isActive": true
-    },
-    {
-      "name": "Paystack-Titan",
-      "code": "100039",
-      "slug": "paystack-titan",
-      "nipCode": "100039",
-      "type": "payment-gateway",
-      "isActive": true
-    },
-    {
-      "name": "Flutterwave",
-      "code": "110002",
-      "slug": "flutterwave",
-      "nipCode": "110002",
-      "type": "payment-gateway",
-      "isActive": true
-    },
-    {
-      "name": "9 Payment Service Bank",
-      "code": "120001",
-      "slug": "9psb",
-      "nipCode": "120001",
-      "type": "payment-service-bank",
-      "isActive": true
-    },
-    {
-      "name": "MTN MoMo PSB",
-      "code": "120003",
-      "slug": "mtn-momo",
-      "nipCode": "120003",
-      "type": "payment-service-bank",
-      "isActive": true
-    },
-    {
-      "name": "Hope PSB",
-      "code": "120002",
-      "slug": "hope-psb",
-      "nipCode": "120002",
-      "type": "payment-service-bank",
-      "isActive": true
-    },
-    {
-      "name": "Paga",
-      "code": "100002",
-      "slug": "paga",
-      "nipCode": "100002",
-      "type": "digital",
-      "isActive": true
-    },
-    {
-      "name": "LAPO Microfinance Bank",
-      "code": "090177",
-      "slug": "lapo-mfb",
-      "nipCode": "090177",
-      "type": "microfinance",
-      "isActive": true
-    },
-    {
-      "name": "AB Microfinance Bank",
-      "code": "090270",
-      "slug": "ab-mfb",
-      "nipCode": "090270",
-      "type": "microfinance",
-      "isActive": true
-    }
-  ],
-  "bankTypes": [
-    {
-      "type": "commercial",
-      "name": "Commercial Bank",
-      "description": "Full-service banks regulated by CBN"
-    },
-    {
-      "type": "non-interest",
-      "name": "Non-Interest Bank",
-      "description": "Islamic/ethical banking without interest"
-    },
-    {
-      "type": "digital",
-      "name": "Digital Bank",
-      "description": "Mobile-first banking platforms"
-    },
-    {
-      "type": "microfinance",
-      "name": "Microfinance Bank",
-      "description": "Banks focusing on small-scale financial services"
-    },
-    {
-      "type": "payment-service-bank",
-      "name": "Payment Service Bank",
-      "description": "Limited license banks for payments and savings"
-    },
-    {
-      "type": "payment-gateway",
-      "name": "Payment Gateway",
-      "description": "Payment processing services"
-    }
-  ],
-  "metadata": {
-    "version": "1.0.0",
-    "lastUpdated": "2024-12-01",
-    "totalBanks": 45,
-    "activeBanks": 44
+[
+  {
+    "name": "Access Bank",
+    "code": "044",
+    "slug": "access-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Citibank Nigeria",
+    "code": "023",
+    "slug": "citibank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Diamond Bank",
+    "code": "063",
+    "slug": "diamond-bank",
+    "type": "commercial",
+    "isActive": false
+  },
+  {
+    "name": "Ecobank Nigeria",
+    "code": "050",
+    "slug": "ecobank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Fidelity Bank",
+    "code": "070",
+    "slug": "fidelity-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "First Bank of Nigeria",
+    "code": "011",
+    "slug": "first-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "First City Monument Bank",
+    "code": "214",
+    "slug": "fcmb",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Guaranty Trust Bank",
+    "code": "058",
+    "slug": "gtbank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Heritage Bank",
+    "code": "030",
+    "slug": "heritage-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Keystone Bank",
+    "code": "082",
+    "slug": "keystone-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Polaris Bank",
+    "code": "076",
+    "slug": "polaris-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Providus Bank",
+    "code": "101",
+    "slug": "providus-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Stanbic IBTC Bank",
+    "code": "221",
+    "slug": "stanbic-ibtc",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Standard Chartered Bank",
+    "code": "068",
+    "slug": "standard-chartered",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Sterling Bank",
+    "code": "232",
+    "slug": "sterling-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Titan Trust Bank",
+    "code": "102",
+    "slug": "titan-trust",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Union Bank of Nigeria",
+    "code": "032",
+    "slug": "union-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "United Bank for Africa",
+    "code": "033",
+    "slug": "uba",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Unity Bank",
+    "code": "215",
+    "slug": "unity-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Wema Bank",
+    "code": "035",
+    "slug": "wema-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Zenith Bank",
+    "code": "057",
+    "slug": "zenith-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Jaiz Bank",
+    "code": "301",
+    "slug": "jaiz-bank",
+    "type": "non-interest",
+    "isActive": true
+  },
+  {
+    "name": "TAJBank",
+    "code": "302",
+    "slug": "tajbank",
+    "type": "non-interest",
+    "isActive": true
+  },
+  {
+    "name": "Lotus Bank",
+    "code": "303",
+    "slug": "lotus-bank",
+    "type": "non-interest",
+    "isActive": true
+  },
+  {
+    "name": "SunTrust Bank Nigeria",
+    "code": "100",
+    "slug": "suntrust-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Globus Bank",
+    "code": "103",
+    "slug": "globus-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Parallex Bank",
+    "code": "104",
+    "slug": "parallex-bank",
+    "type": "commercial",
+    "isActive": true
+  },
+  {
+    "name": "Kuda Bank",
+    "code": "090267",
+    "slug": "kuda-bank",
+    "type": "microfinance",
+    "isActive": true
+  },
+  {
+    "name": "OPay",
+    "code": "999992",
+    "slug": "opay",
+    "type": "mobile-money",
+    "isActive": true
+  },
+  {
+    "name": "PalmPay",
+    "code": "999991",
+    "slug": "palmpay",
+    "type": "mobile-money",
+    "isActive": true
+  },
+  {
+    "name": "Moniepoint",
+    "code": "50515",
+    "slug": "moniepoint",
+    "type": "microfinance",
+    "isActive": true
+  },
+  {
+    "name": "VFD Microfinance Bank",
+    "code": "090110",
+    "slug": "vfd-mfb",
+    "type": "microfinance",
+    "isActive": true
+  },
+  {
+    "name": "Rubies Microfinance Bank",
+    "code": "090175",
+    "slug": "rubies-mfb",
+    "type": "microfinance",
+    "isActive": true
+  },
+  {
+    "name": "LAPO Microfinance Bank",
+    "code": "090177",
+    "slug": "lapo-mfb",
+    "type": "microfinance",
+    "isActive": true
+  },
+  {
+    "name": "Sparkle Microfinance Bank",
+    "code": "090325",
+    "slug": "sparkle",
+    "type": "microfinance",
+    "isActive": true
+  },
+  {
+    "name": "Carbon (One Finance)",
+    "code": "090548",
+    "slug": "carbon",
+    "type": "microfinance",
+    "isActive": true
+  },
+  {
+    "name": "FairMoney Microfinance Bank",
+    "code": "090551",
+    "slug": "fairmoney",
+    "type": "microfinance",
+    "isActive": true
   }
-}
+]
