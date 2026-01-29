@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json.schemastore.org/prettierrc",
+  
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 100,
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "quoteProps": "as-needed",
+  "jsxSingleQuote": false,
+  "bracketSameLine": false,
+  "proseWrap": "preserve",
+  
+  "overrides": [
+    {
+      "files": "*.json",
+      "options": {
+        "printWidth": 80
+      }
+    },
+    {
+      "files": "*.graphql",
+      "options": {
+        "printWidth": 80
+      }
+    }
+  ]
+}

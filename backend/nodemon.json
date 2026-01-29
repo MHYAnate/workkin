@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json.schemastore.org/nodemon.json",
+  
+  "_comment": "===========================================",
+  "_comment2": "WORKKIN BACKEND - Nodemon Configuration",
+  "_comment3": "Hot reload configuration for development",
+  "_comment4": "===========================================",
+  
+  "watch": [
+    "src",
+    ".env",
+    "prisma/schema.prisma"
+  ],
+  
+  "_watchComment": "Directories and files to watch for changes",
+  
+  "ext": "ts,json,graphql,prisma",
+  
+  "_extComment": "File extensions to watch (TypeScript, JSON, GraphQL schemas, Prisma schema)",
+  
+  "ignore": [
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "src/**/__tests__/**",
+    "src/**/__mocks__/**",
+    "node_modules",
+    "dist",
+    "coverage",
+    "logs",
+    "*.log",
+    ".git"
+  ],
+  
+  "_ignoreComment": "Files and directories to ignore (tests, build output, logs)",
+  
+  "exec": "tsx src/index.ts",
+  
+  "_execComment": "Command to execute - tsx is faster than ts-node for ESM",
+  
+  "delay": 500,
+  
+  "_delayComment": "Delay in ms before restarting after file change (prevents rapid restarts)",
+  
+  "verbose": true,
+  
+  "_verboseComment": "Show detailed nodemon output for debugging",
+  
+  "legacyWatch": false,
+  
+  "_legacyWatchComment": "Use polling instead of native file watching (enable if having issues on Docker/WSL)",
+  
+  "restartable": "rs",
+  
+  "_restartableComment": "Type 'rs' in terminal to manually restart",
+  
+  "env": {
+    "NODE_ENV": "development",
+    "DEBUG": "true"
+  },
+  
+  "_envComment": "Environment variables to set when running",
+  
+  "signal": "SIGTERM",
+  
+  "_signalComment": "Signal to use for graceful shutdown",
+  
+  "colours": true,
+  
+  "_coloursComment": "Enable colored output in terminal",
+  
+  "events": {
+    "start": "echo '\\n🚀 Starting Workkin server...'",
+    "restart": "echo '\\n🔄 Restarting due to changes...'",
+    "crash": "echo '\\n💥 Server crashed! Waiting for changes...'"
+  },
+  
+  "_eventsComment": "Custom messages for different nodemon events"
+}

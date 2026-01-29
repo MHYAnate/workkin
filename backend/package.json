@@ -41,7 +41,11 @@
     "generate:all": "npm run prisma:generate && npm run generate:types",
     "prepare": "husky",
     "health": "curl -s http://localhost:4000/health | jq",
-    "logs:dev": "tail -f logs/combined.log | pino-pretty"
+    "logs:dev": "tail -f logs/combined.log | pino-pretty",   
+    "docker:dev": "docker-compose -f docker-compose.dev.yml up -d",
+    "docker:down": "docker-compose -f docker-compose.dev.yml down",
+    "check:deps": "npm outdated",
+    "check:security": "npm audit"
   },
   "keywords": [
     "workkin",

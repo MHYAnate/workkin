@@ -1,0 +1,261 @@
+[
+  {
+    "name": "Abia",
+    "code": "AB",
+    "capital": "Umuahia",
+    "region": "South East",
+    "cities": ["Aba", "Umuahia", "Ohafia", "Arochukwu", "Bende", "Umunneochi", "Isuikwuato"]
+  },
+  {
+    "name": "Adamawa",
+    "code": "AD",
+    "capital": "Yola",
+    "region": "North East",
+    "cities": ["Yola", "Mubi", "Jimeta", "Numan", "Ganye", "Gombi", "Michika"]
+  },
+  {
+    "name": "Akwa Ibom",
+    "code": "AK",
+    "capital": "Uyo",
+    "region": "South South",
+    "cities": ["Uyo", "Eket", "Ikot Ekpene", "Oron", "Abak", "Ikot Abasi", "Etinan"]
+  },
+  {
+    "name": "Anambra",
+    "code": "AN",
+    "capital": "Awka",
+    "region": "South East",
+    "cities": ["Onitsha", "Awka", "Nnewi", "Ekwulobia", "Aguata", "Obosi", "Ihiala"]
+  },
+  {
+    "name": "Bauchi",
+    "code": "BA",
+    "capital": "Bauchi",
+    "region": "North East",
+    "cities": ["Bauchi", "Azare", "Misau", "Jama'are", "Katagum", "Dass", "Tafawa Balewa"]
+  },
+  {
+    "name": "Bayelsa",
+    "code": "BY",
+    "capital": "Yenagoa",
+    "region": "South South",
+    "cities": ["Yenagoa", "Brass", "Nembe", "Ogbia", "Sagbama", "Ekeremor", "Kolokuma"]
+  },
+  {
+    "name": "Benue",
+    "code": "BE",
+    "capital": "Makurdi",
+    "region": "North Central",
+    "cities": ["Makurdi", "Gboko", "Otukpo", "Katsina-Ala", "Vandeikya", "Oturkpo", "Aliade"]
+  },
+  {
+    "name": "Borno",
+    "code": "BO",
+    "capital": "Maiduguri",
+    "region": "North East",
+    "cities": ["Maiduguri", "Biu", "Dikwa", "Bama", "Gwoza", "Monguno", "Konduga"]
+  },
+  {
+    "name": "Cross River",
+    "code": "CR",
+    "capital": "Calabar",
+    "region": "South South",
+    "cities": ["Calabar", "Ogoja", "Ikom", "Obudu", "Ugep", "Akamkpa", "Odukpani"]
+  },
+  {
+    "name": "Delta",
+    "code": "DE",
+    "capital": "Asaba",
+    "region": "South South",
+    "cities": ["Warri", "Asaba", "Sapele", "Ughelli", "Agbor", "Effurun", "Ozoro", "Abraka"]
+  },
+  {
+    "name": "Ebonyi",
+    "code": "EB",
+    "capital": "Abakaliki",
+    "region": "South East",
+    "cities": ["Abakaliki", "Afikpo", "Onueke", "Ezzamgbo", "Ishielu", "Ikwo", "Ohaukwu"]
+  },
+  {
+    "name": "Edo",
+    "code": "ED",
+    "capital": "Benin City",
+    "region": "South South",
+    "cities": ["Benin City", "Auchi", "Ekpoma", "Uromi", "Ubiaja", "Igarra", "Sabongida-Ora"]
+  },
+  {
+    "name": "Ekiti",
+    "code": "EK",
+    "capital": "Ado-Ekiti",
+    "region": "South West",
+    "cities": ["Ado-Ekiti", "Ikere-Ekiti", "Ilawe-Ekiti", "Ijero-Ekiti", "Ikole-Ekiti", "Omuo-Ekiti"]
+  },
+  {
+    "name": "Enugu",
+    "code": "EN",
+    "capital": "Enugu",
+    "region": "South East",
+    "cities": ["Enugu", "Nsukka", "Agbani", "Awgu", "Oji River", "Udi", "Ezeagu"]
+  },
+  {
+    "name": "Federal Capital Territory",
+    "code": "FCT",
+    "capital": "Abuja",
+    "region": "North Central",
+    "cities": ["Abuja", "Gwagwalada", "Kuje", "Kubwa", "Nyanya", "Maitama", "Wuse", "Garki", "Asokoro", "Gwarinpa"]
+  },
+  {
+    "name": "Gombe",
+    "code": "GO",
+    "capital": "Gombe",
+    "region": "North East",
+    "cities": ["Gombe", "Billiri", "Kaltungo", "Bajoga", "Dukku", "Akko", "Yamaltu"]
+  },
+  {
+    "name": "Imo",
+    "code": "IM",
+    "capital": "Owerri",
+    "region": "South East",
+    "cities": ["Owerri", "Orlu", "Okigwe", "Oguta", "Mbaise", "Nkwerre", "Ideato"]
+  },
+  {
+    "name": "Jigawa",
+    "code": "JI",
+    "capital": "Dutse",
+    "region": "North West",
+    "cities": ["Dutse", "Hadejia", "Kazaure", "Gumel", "Birnin Kudu", "Ringim", "Babura"]
+  },
+  {
+    "name": "Kaduna",
+    "code": "KD",
+    "capital": "Kaduna",
+    "region": "North West",
+    "cities": ["Kaduna", "Zaria", "Kafanchan", "Kagoro", "Saminaka", "Birnin Gwari", "Kachia"]
+  },
+  {
+    "name": "Kano",
+    "code": "KN",
+    "capital": "Kano",
+    "region": "North West",
+    "cities": ["Kano", "Wudil", "Gaya", "Rano", "Bichi", "Dawakin Kudu", "Fagge", "Tarauni"]
+  },
+  {
+    "name": "Katsina",
+    "code": "KT",
+    "capital": "Katsina",
+    "region": "North West",
+    "cities": ["Katsina", "Daura", "Funtua", "Malumfashi", "Kankia", "Dutsin-Ma", "Jibia"]
+  },
+  {
+    "name": "Kebbi",
+    "code": "KE",
+    "capital": "Birnin Kebbi",
+    "region": "North West",
+    "cities": ["Birnin Kebbi", "Argungu", "Yauri", "Zuru", "Jega", "Bagudo", "Gwandu"]
+  },
+  {
+    "name": "Kogi",
+    "code": "KO",
+    "capital": "Lokoja",
+    "region": "North Central",
+    "cities": ["Lokoja", "Okene", "Kabba", "Idah", "Ankpa", "Ajaokuta", "Dekina"]
+  },
+  {
+    "name": "Kwara",
+    "code": "KW",
+    "capital": "Ilorin",
+    "region": "North Central",
+    "cities": ["Ilorin", "Offa", "Jebba", "Patigi", "Lafiagi", "Omu-Aran", "Oro"]
+  },
+  {
+    "name": "Lagos",
+    "code": "LA",
+    "capital": "Ikeja",
+    "region": "South West",
+    "cities": ["Lagos Island", "Ikeja", "Victoria Island", "Lekki", "Surulere", "Yaba", "Ikorodu", "Ajah", "Apapa", "Festac", "Oshodi", "Mushin", "Agege", "Badagry", "Epe", "Maryland", "Ogba", "Gbagada", "Magodo"]
+  },
+  {
+    "name": "Nasarawa",
+    "code": "NA",
+    "capital": "Lafia",
+    "region": "North Central",
+    "cities": ["Lafia", "Keffi", "Akwanga", "Nasarawa", "Doma", "Karu", "Toto"]
+  },
+  {
+    "name": "Niger",
+    "code": "NI",
+    "capital": "Minna",
+    "region": "North Central",
+    "cities": ["Minna", "Bida", "Suleja", "Kontagora", "New Bussa", "Lapai", "Mokwa"]
+  },
+  {
+    "name": "Ogun",
+    "code": "OG",
+    "capital": "Abeokuta",
+    "region": "South West",
+    "cities": ["Abeokuta", "Ijebu-Ode", "Sagamu", "Ota", "Ilaro", "Ifo", "Ado-Odo", "Ijebu-Igbo"]
+  },
+  {
+    "name": "Ondo",
+    "code": "ON",
+    "capital": "Akure",
+    "region": "South West",
+    "cities": ["Akure", "Ondo", "Owo", "Ikare", "Okitipupa", "Ore", "Idanre"]
+  },
+  {
+    "name": "Osun",
+    "code": "OS",
+    "capital": "Osogbo",
+    "region": "South West",
+    "cities": ["Osogbo", "Ile-Ife", "Ilesa", "Ede", "Iwo", "Ikire", "Ejigbo"]
+  },
+  {
+    "name": "Oyo",
+    "code": "OY",
+    "capital": "Ibadan",
+    "region": "South West",
+    "cities": ["Ibadan", "Ogbomoso", "Oyo", "Iseyin", "Saki", "Eruwa", "Igboho", "Fiditi"]
+  },
+  {
+    "name": "Plateau",
+    "code": "PL",
+    "capital": "Jos",
+    "region": "North Central",
+    "cities": ["Jos", "Bukuru", "Pankshin", "Shendam", "Langtang", "Barkin Ladi", "Mangu"]
+  },
+  {
+    "name": "Rivers",
+    "code": "RI",
+    "capital": "Port Harcourt",
+    "region": "South South",
+    "cities": ["Port Harcourt", "Obio-Akpor", "Eleme", "Bonny", "Degema", "Ahoada", "Omoku", "Okirika"]
+  },
+  {
+    "name": "Sokoto",
+    "code": "SO",
+    "capital": "Sokoto",
+    "region": "North West",
+    "cities": ["Sokoto", "Tambuwal", "Wurno", "Bodinga", "Gwadabawa", "Illela", "Wamako"]
+  },
+  {
+    "name": "Taraba",
+    "code": "TA",
+    "capital": "Jalingo",
+    "region": "North East",
+    "cities": ["Jalingo", "Wukari", "Takum", "Bali", "Serti", "Gembu", "Zing"]
+  },
+  {
+    "name": "Yobe",
+    "code": "YO",
+    "capital": "Damaturu",
+    "region": "North East",
+    "cities": ["Damaturu", "Potiskum", "Gashua", "Nguru", "Geidam", "Fika", "Bade"]
+  },
+  {
+    "name": "Zamfara",
+    "code": "ZA",
+    "capital": "Gusau",
+    "region": "North West",
+    "cities": ["Gusau", "Kaura Namoda", "Talata Mafara", "Anka", "Maru", "Bungudu", "Shinkafi"]
+  }
+]

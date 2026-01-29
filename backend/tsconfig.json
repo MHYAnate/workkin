@@ -1,0 +1,180 @@
+{
+  "compilerOptions": {
+    // ============================================
+    // TARGET & MODULE CONFIGURATION
+    // ============================================
+    
+    // Target ES2022 for modern JavaScript features
+    // Node.js 18+ fully supports ES2022
+    "target": "ES2022",
+    
+    // Use NodeNext for ESM support with Node.js
+    // This enables native ES modules with proper resolution
+    "module": "NodeNext",
+    
+    // Module resolution strategy for Node.js ESM
+    "moduleResolution": "NodeNext",
+    
+    // ============================================
+    // OUTPUT CONFIGURATION
+    // ============================================
+    
+    // Output directory for compiled files
+    "outDir": "./dist",
+    
+    // Root directory of source files
+    "rootDir": "./src",
+    
+    // Generate declaration files (.d.ts) for type information
+    "declaration": true,
+    
+    // Generate source maps for debugging
+    "sourceMap": true,
+    
+    // Remove comments from output (smaller bundle)
+    "removeComments": true,
+    
+    // ============================================
+    // STRICT TYPE CHECKING
+    // ============================================
+    
+    // Enable all strict type checking options
+    "strict": true,
+    
+    // Ensure 'this' is typed correctly
+    "noImplicitThis": true,
+    
+    // Ensure all code paths return a value
+    "noImplicitReturns": true,
+    
+    // Report errors for fallthrough cases in switch
+    "noFallthroughCasesInSwitch": true,
+    
+    // Report unused local variables
+    "noUnusedLocals": true,
+    
+    // Report unused parameters
+    "noUnusedParameters": true,
+    
+    // Ensure overrides are explicitly marked
+    "noImplicitOverride": true,
+    
+    // Allow unreachable code (useful during development)
+    "allowUnreachableCode": false,
+    
+    // Check for uncalled functions in conditionals
+    "strictFunctionTypes": true,
+    
+    // Enable strict null checks
+    "strictNullChecks": true,
+    
+    // Enable strict property initialization
+    "strictPropertyInitialization": true,
+    
+    // ============================================
+    // INTEROP & COMPATIBILITY
+    // ============================================
+    
+    // Allow importing CommonJS modules as ES modules
+    "esModuleInterop": true,
+    
+    // Allow synthetic default imports
+    "allowSyntheticDefaultImports": true,
+    
+    // Ensure consistent casing in imports
+    "forceConsistentCasingInFileNames": true,
+    
+    // Skip type checking of declaration files (faster builds)
+    "skipLibCheck": true,
+    
+    // Resolve JSON modules
+    "resolveJsonModule": true,
+    
+    // ============================================
+    // PATH ALIASES
+    // These allow clean imports like @/services/auth
+    // instead of ../../../services/auth
+    // ============================================
+    
+    "baseUrl": "./src",
+    "paths": {
+      // Main alias for src directory
+      "@/*": ["./*"],
+      
+      // Specific aliases for major directories
+      "@config/*": ["config/*"],
+      "@graphql/*": ["graphql/*"],
+      "@middleware/*": ["middleware/*"],
+      "@services/*": ["services/*"],
+      "@utils/*": ["utils/*"],
+      "@types/*": ["types/*"],
+      "@validators/*": ["validators/*"],
+      "@errors/*": ["errors/*"],
+      "@constants/*": ["constants/*"],
+      "@ai/*": ["ai/*"],
+      "@payments/*": ["payments/*"],
+      "@socket/*": ["socket/*"],
+      "@jobs/*": ["jobs/*"],
+      "@webhooks/*": ["webhooks/*"],
+      "@templates/*": ["templates/*"],
+      "@data/*": ["data/*"]
+    },
+    
+    // ============================================
+    // EXPERIMENTAL FEATURES
+    // ============================================
+    
+    // Enable decorators (required for some libraries)
+    "experimentalDecorators": true,
+    
+    // Emit decorator metadata (required for dependency injection)
+    "emitDecoratorMetadata": true,
+    
+    // ============================================
+    // LIBRARY & TYPE DEFINITIONS
+    // ============================================
+    
+    // Include standard library definitions
+    "lib": [
+      "ES2022",
+      "DOM"
+    ],
+    
+    // Type roots for type definitions
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/types"
+    ],
+    
+    // Specific types to include
+    "types": [
+      "node"
+    ]
+  },
+  
+  // ============================================
+  // FILE INCLUSION/EXCLUSION
+  // ============================================
+  
+  // Files to include in compilation
+  "include": [
+    "src/**/*.ts",
+    "prisma/seed.ts"
+  ],
+  
+  // Files to exclude from compilation
+  "exclude": [
+    "node_modules",
+    "dist",
+    "tests",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "coverage"
+  ],
+  
+  // TypeScript config for ts-node (development)
+  "ts-node": {
+    "esm": true,
+    "experimentalSpecifierResolution": "node"
+  }
+}

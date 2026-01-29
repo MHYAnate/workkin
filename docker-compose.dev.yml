@@ -1,0 +1,244 @@
+# ================================================
+# WORKKIN - Docker Compose Development Configuration
+# ================================================
+# Usage:
+#   Start:    docker-compose -f docker-compose.dev.yml up -d
+#   Stop:     docker-compose -f docker-compose.dev.yml down
+#   Logs:     docker-compose -f docker-compose.dev.yml logs -f
+#   Reset:    docker-compose -f docker-compose.dev.yml down -v
+# ================================================
+
+version: '3.8'
+
+# =====================
+# SERVICE DEFINITIONS
+# =====================
+services:
+  
+  # ---------------------
+  # PostgreSQL Database
+  # ---------------------
+  postgres:
+    image: postgres:15-alpine
+    container_name: workkin_postgres
+    
+    # Restart policy - always restart unless manually stopped
+    restart: unless-stopped
+    
+    # Environment variables for database setup
+    environment:
+      POSTGRES_USER: workkin
+      POSTGRES_PASSWORD: workkin_dev_password
+      POSTGRES_DB: workkin_dev
+      # Performance settings for development
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=en_US.utf8"
+      # Timezone
+      TZ: Africa/Lagos
+    
+    # Port mapping: host:container
+    ports:
+      - "5432:5432"
+    
+    # Persistent volume for data
+    volumes:
+      # Named volume for database data
+      - postgres_data:/var/lib/postgresql/data
+      # Custom initialization scripts (optional)
+      - ./docker/postgres/init:/docker-entrypoint-initdb.d:ro
+    
+    # Health check configuration
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U workkin -d workkin_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    
+    # Resource limits for development
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
+    
+    # Network configuration
+    networks:
+      - workkin_network
+    
+    # Logging configuration
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------
+  # Redis Cache & Queue
+  # ---------------------
+  redis:
+    image: redis:7-alpine
+    container_name: workkin_redis
+    
+    restart: unless-stopped
+    
+    # Redis configuration command
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 128mb
+      --maxmemory-policy allkeys-lru
+      --tcp-keepalive 300
+      --timeout 0
+      --loglevel notice
+    
+    # Port mapping
+    ports:
+      - "6379:6379"
+    
+    # Persistent volume for Redis data
+    volumes:
+      - redis_data:/data
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+        reservations:
+          memory: 64M
+    
+    networks:
+      - workkin_network
+    
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # ---------------------
+  # Redis Commander (Optional)
+  # Web-based Redis management UI
+  # ---------------------
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: workkin_redis_commander
+    
+    restart: unless-stopped
+    
+    environment:
+      # Connect to our Redis instance
+      REDIS_HOSTS: local:redis:6379
+      # HTTP basic auth (optional, for security)
+      HTTP_USER: admin
+      HTTP_PASSWORD: admin_dev
+    
+    ports:
+      - "8081:8081"
+    
+    depends_on:
+      redis:
+        condition: service_healthy
+    
+    networks:
+      - workkin_network
+    
+    # Only start if you need it
+    profiles:
+      - tools
+
+  # ---------------------
+  # pgAdmin (Optional)
+  # Web-based PostgreSQL management UI
+  # ---------------------
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: workkin_pgadmin
+    
+    restart: unless-stopped
+    
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@workkin.ng
+      PGADMIN_DEFAULT_PASSWORD: admin_dev
+      PGADMIN_LISTEN_PORT: 80
+    
+    ports:
+      - "8080:80"
+    
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    
+    depends_on:
+      postgres:
+        condition: service_healthy
+    
+    networks:
+      - workkin_network
+    
+    # Only start if you need it
+    profiles:
+      - tools
+
+  # ---------------------
+  # MailHog (Optional)
+  # Email testing server - catches all outgoing emails
+  # ---------------------
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: workkin_mailhog
+    
+    restart: unless-stopped
+    
+    ports:
+      # SMTP server
+      - "1025:1025"
+      # Web UI for viewing emails
+      - "8025:8025"
+    
+    networks:
+      - workkin_network
+    
+    profiles:
+      - tools
+
+# =====================
+# NETWORKS
+# =====================
+networks:
+  workkin_network:
+    name: workkin_network
+    driver: bridge
+    # IPv6 support (optional)
+    # enable_ipv6: true
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.28.0.0/16
+
+# =====================
+# VOLUMES
+# =====================
+volumes:
+  # PostgreSQL data persistence
+  postgres_data:
+    name: workkin_postgres_data
+    driver: local
+  
+  # Redis data persistence
+  redis_data:
+    name: workkin_redis_data
+    driver: local
+  
+  # pgAdmin data persistence (sessions, settings)
+  pgadmin_data:
+    name: workkin_pgadmin_data
+    driver: local

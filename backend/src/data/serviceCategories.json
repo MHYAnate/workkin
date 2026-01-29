@@ -1,0 +1,92 @@
+[
+  {
+    "id": "cat-mechanics-auto-repair",
+    "name": "Mechanics & Auto Repair",
+    "slug": "mechanics-auto-repair",
+    "description": "Vehicle repair, maintenance, and mechanical services for cars, motorcycles, and commercial vehicles",
+    "icon": "wrench",
+    "image": "/images/categories/mechanics.jpg",
+    "order": 1,
+    "isActive": true
+  },
+  {
+    "id": "cat-vehicle-sales",
+    "name": "Vehicle Sales",
+    "slug": "vehicle-sales",
+    "description": "Authorized dealers and individual sellers for new and used vehicles",
+    "icon": "car",
+    "image": "/images/categories/vehicle-sales.jpg",
+    "order": 2,
+    "isActive": true
+  },
+  {
+    "id": "cat-transportation-services",
+    "name": "Transportation Services",
+    "slug": "transportation-services",
+    "description": "Logistics, delivery, rental, and transportation solutions",
+    "icon": "truck",
+    "image": "/images/categories/transportation.jpg",
+    "order": 3,
+    "isActive": true
+  },
+  {
+    "id": "cat-construction-building",
+    "name": "Construction & Building",
+    "slug": "construction-building",
+    "description": "Construction, masonry, roofing, and building services",
+    "icon": "building",
+    "image": "/images/categories/construction.jpg",
+    "order": 4,
+    "isActive": true
+  },
+  {
+    "id": "cat-home-maintenance",
+    "name": "Home Maintenance",
+    "slug": "home-maintenance",
+    "description": "Home repair, cleaning, installation, and maintenance services",
+    "icon": "home",
+    "image": "/images/categories/home-maintenance.jpg",
+    "order": 5,
+    "isActive": true
+  },
+  {
+    "id": "cat-real-estate-services",
+    "name": "Real Estate Services",
+    "slug": "real-estate-services",
+    "description": "Property agents, landlords, and property management services",
+    "icon": "building-2",
+    "image": "/images/categories/real-estate.jpg",
+    "order": 6,
+    "isActive": true
+  },
+  {
+    "id": "cat-personal-services",
+    "name": "Personal Services",
+    "slug": "personal-services",
+    "description": "Beauty, grooming, care, and personal wellness services",
+    "icon": "user",
+    "image": "/images/categories/personal.jpg",
+    "order": 7,
+    "isActive": true
+  },
+  {
+    "id": "cat-professional-services",
+    "name": "Professional Services",
+    "slug": "professional-services",
+    "description": "Business, technology, events, and professional consulting services",
+    "icon": "briefcase",
+    "image": "/images/categories/professional.jpg",
+    "order": 8,
+    "isActive": true
+  },
+  {
+    "id": "cat-financial-services",
+    "name": "Financial Services",
+    "slug": "financial-services",
+    "description": "Insurance, financing, and financial product providers",
+    "icon": "banknote",
+    "image": "/images/categories/financial.jpg",
+    "order": 9,
+    "isActive": true
+  }
+]
